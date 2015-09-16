@@ -1,9 +1,9 @@
 <?php
 
-define('ROOT_PATH', __DIR__ . '/..');
-define('VENDOR_PATH', ROOT_PATH . '/vendor');
+define('ROOT_PATH', __DIR__.'/..');
+define('VENDOR_PATH', ROOT_PATH.'/vendor');
 
-if (file_exists($path = VENDOR_PATH . '/autoload.php')) {
+if (file_exists($path = VENDOR_PATH.'/autoload.php')) {
     require $path;
 }
 
