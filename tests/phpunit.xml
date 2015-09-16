@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
+    <testsuite name="Entity Test Suite">
+        <directory sufix="Test.php">./tests/Entity/</directory>
+    </testsuite>
+    <testsuite name="Config Test Suite">
+        <directory sufix="Test.php">./tests/Config/</directory>
+    </testsuite>
+    <testsuite name="Exception Test Suite">
+        <directory sufix="Test.php">./tests/Exception/</directory>
+    </testsuite>
+    <testsuite name="Manager Test Suite">
+        <directory sufix="Test.php">./tests/Manager/</directory>
+    </testsuite>
+</phpunit>
