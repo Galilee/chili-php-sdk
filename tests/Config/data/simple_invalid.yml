@@ -1,1 +1,6 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget mollis leo. Donec consequat mi sapien, id bibendum tortor blandit eu. Duis tempus tempor mi ac consequat. Phasellus dapibus faucibus urna eu porta. Nunc at faucibus libero. Duis dapibus libero non mi mattis, a scelerisque dolor bibendum.
+ login: test
+password: test@pwd
+ wsdlUrl: http://test.wsdlurl.fr/testService?wsdl
+environment: test
+ privateUrl: http://private.test.fr
+publicUrl: http://public.test.fr

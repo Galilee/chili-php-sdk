@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <ResourceItemCopyResponse xmlns="http://www.chili-publisher.com/">
+            <ResourceItemCopyResult><![CDATA[<item name="copy" id="b9c5b755-aa96-4220-b5d9-b4981039a2ed" relativePath="Formation\Geraud\Pimcore\copy.xml"><fileInfo fileIndexed="2015-11-06 10:36:10" numPages="1" resolution="72" width="595.266" height="280.6254" fileSize="41.52 Kb"><metaData><item name="Num. Pages" value="1" /><item name="Width" value="210 mm" /><item name="Height" value="99 mm" /></metaData><boxes /></fileInfo></item>]]></ResourceItemCopyResult>
+        </ResourceItemCopyResponse>
+    </soap:Body>
+</soap:Envelope>

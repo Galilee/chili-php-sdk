@@ -11,14 +11,14 @@ use Galilee\PPM\SDK\Chili\Config\ConfigService;
 class ConfigServiceTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function setUp(){
+    /*public function setUp(){
         parent::setUp();
-    }
+    }*/
 
     public function testPhpArrayConfigShouldReturnConfigObject()
     {
         $type = 'php_array';
-        $config_arr = [
+        $configArr = [
             'login'       => 'login',
             'password'    => '1234',
             'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
@@ -27,16 +27,16 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
             'publicUrl'   => 'http://public.test.fr',
         ];
 
-        $configService = new ConfigService($type, $config_arr);
+        $configService = new ConfigService($type, $configArr);
         $config = $configService->getConfig();
 
         $this->assertInstanceOf('Galilee\PPM\SDK\Chili\Config\Config', $config);
-        $this->assertEquals($config->getLogin(), $config_arr['login']);
-        $this->assertEquals($config->getWsdlUrl(), $config_arr['wsdlUrl']);
-        $this->assertEquals($config->getEnvironment(), $config_arr['environment']);
-        $this->assertEquals($config->getPassword(), $config_arr['password']);
-        $this->assertEquals($config->getPrivateUrl(), $config_arr['privateUrl']);
-        $this->assertEquals($config->getPublicUrl(), $config_arr['publicUrl']);
+        $this->assertEquals($config->getLogin(), $configArr['login']);
+        $this->assertEquals($config->getWsdlUrl(), $configArr['wsdlUrl']);
+        $this->assertEquals($config->getEnvironment(), $configArr['environment']);
+        $this->assertEquals($config->getPassword(), $configArr['password']);
+        $this->assertEquals($config->getPrivateUrl(), $configArr['privateUrl']);
+        $this->assertEquals($config->getPublicUrl(), $configArr['publicUrl']);
     }
 
     /**
@@ -45,7 +45,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
     public function testPhpArrayConfigWithMissingParameterShouldThrowException()
     {
         $type = 'php_array';
-        $config_arr = [
+        $configArr = [
             'password'    => '1234',
             'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
@@ -53,7 +53,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
             'publicUrl'   => 'http://public.test.fr',
         ];
 
-        $configService = new ConfigService($type, $config_arr);
+        $configService = new ConfigService($type, $configArr);
         $config = $configService->getConfig();
     }
 
@@ -74,7 +74,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidYamlException
      */
     public function testYamlInvalidConfigShouldThrowException()
     {
@@ -100,18 +100,73 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($config->getPublicUrl(), 'http://public.test.fr');
     }
 
-    public function testIvalidXmlConfigShouldThrowException()
+    /**
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidXmlException
+     */
+    public function testIvalidXmlConfigShouldThrowInvalidXmlException()
     {
-        //todo
+        $xmlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.xml');
+
+        $configService = new ConfigService('xml', $xmlConf);
+        $config = $configService->getConfig();
+    }
+
+    /**
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException
+     */
+    public function testIvalidXmlConfigShouldThrowInvalidConfigurationException()
+    {
+        $xmlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid_property.xml');
+
+        $configService = new ConfigService('xml', $xmlConf);
+        $config = $configService->getConfig();
     }
 
     public function testJsonConfigShouldReturnConfigObject()
     {
-        //todo
+        $jsonConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.json');
+
+        $configService = new ConfigService('json', $jsonConf);
+        $config = $configService->getConfig();
+
+        $this->assertInstanceOf('Galilee\PPM\SDK\Chili\Config\Config', $config);
+        $this->assertEquals($config->getLogin(), 'test');
+        $this->assertEquals($config->getEnvironment(), 'test');
+        $this->assertEquals($config->getPassword(), 'test@pwd');
+        $this->assertEquals($config->getPrivateUrl(), 'http://private.test.fr');
+        $this->assertEquals($config->getPublicUrl(), 'http://public.test.fr');
     }
 
-    public function testIvalidJsonConfigShouldThrowException()
+    /**
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidJsonException
+     */
+    public function testIvalidJsonConfigShouldThrowInvalidJsonException()
     {
-        //todo
+        $jsonConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.json');
+
+        $configService = new ConfigService('json', $jsonConf);
+        $config = $configService->getConfig();
+    }
+
+    /**
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException
+     */
+    public function testIvalidJsonConfigShouldThrowInvalidConfigurationException()
+    {
+        $jsonConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid_property.json');
+
+        $configService = new ConfigService('json', $jsonConf);
+        $config = $configService->getConfig();
+    }
+
+    /**
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException
+     */
+    public function testInvalidTypeConfigurationShouldThrowException(){
+        $conf = array('test' => 'test');
+        $confType = 'dummy';
+
+        $configService = new ConfigService($confType, $conf);
+        $config = $configService->getConfig();
     }
 }

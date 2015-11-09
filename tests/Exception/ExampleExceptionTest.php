@@ -7,7 +7,7 @@ namespace Galilee\PPM\Tests\SDK\Chili\Entity;
  */
 class ExampleExceptionTest extends \PHPUnit_Framework_TestCase
 {
-    public function exampleTest()
+    public function testExample()
     {
         $this->assertTrue(1 == 1);
     }

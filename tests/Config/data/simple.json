@@ -1,0 +1,8 @@
+{
+  "login" : "test",
+  "password" : "test@pwd",
+  "environment" : "test",
+  "wsdlUrl" : "http://test.wsdlurl.fr/testService?wsdl",
+  "privateUrl" : "http://private.test.fr",
+  "publicUrl" : "http://public.test.fr"
+}

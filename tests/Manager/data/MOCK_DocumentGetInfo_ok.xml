@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <DocumentGetInfoResponse xmlns="http://www.chili-publisher.com/">
+            <DocumentGetInfoResult>&lt;documentInfo id="3728e7ef-adcb-44a3-83f7-d2949edd9cbe" name="snippetHotel" path="Formation\Geraud\Pimcore\snippetHotel.xml" zoom="105.66376451826349" width="210 mm" height="99 mm" bleedLeft="2mm" bleedTop="2mm" bleedRight="2mm" bleedBottom="2mm" initialLayout="8AA5489D-F978-0728-69AC-15D9787EDB48" initialLayoutName="[Default]" savedInEditor="true" textLanguage="" chiliVersion="3.5.0.0" foldSettingID="" foldDocIdentifier="" numPages="1">&lt;alternateLayouts>&lt;item id="8AA5489D-F978-0728-69AC-15D9787EDB48" name="[Default]" width="210 mm" height="99 mm" />&lt;/alternateLayouts>&lt;/documentInfo></DocumentGetInfoResult>
+        </DocumentGetInfoResponse>
+    </soap:Body>
+</soap:Envelope>

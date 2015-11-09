@@ -114,7 +114,11 @@ class ConfigService {
 
         if($resultObject === false){
             $errors = libxml_get_errors();
-            throw new InvalidXmlException('Invalid XML : ' . implode("\t", $errors));
+            $messages = [];
+            foreach($errors as $error){
+                $messages[] = $error->message;
+            }
+            throw new InvalidXmlException('Invalid XML : ' . implode("\t", $messages));
         }
         $result = [];
         if($resultObject instanceof \SimpleXMLElement){
@@ -157,10 +161,8 @@ class ConfigService {
     {
         $decoded = @json_decode($json, true);
 
-        if($decoded === null ){
-            if(json_last_error() != JSON_ERROR_NONE){
-                throw new InvalidJsonException('Invalid JSON encoding / decoding. Error code : ' . json_last_error());
-            }
+        if($decoded === null && json_last_error() != JSON_ERROR_NONE){
+            throw new InvalidJsonException('Invalid JSON encoding / decoding. Error code : ' . json_last_error());
         }
 
         return $decoded;
@@ -172,10 +174,12 @@ class ConfigService {
      *
      * @return array
      */
-    protected function parseArray(array $arr)
+    protected function parseArray($arr)
     {
+        if(!is_array($arr)){
+            throw new InvalidConfigurationException('Illegal configuration format. The argument $arr should be an array (key => value pairs)');
+        }
 
-        //todo add something if needed
         return $arr;
     }
 

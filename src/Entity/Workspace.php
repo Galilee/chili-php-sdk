@@ -7,5 +7,11 @@ namespace Galilee\PPM\SDK\Chili\Entity;
  */
 class Workspace extends AbstractEntity
 {
-    // todo
+    const RESOURCE_NAME = 'WorkSpaces';
+
+    protected $availablePropertiesMap = [
+        AbstractEntity::NAME  =>  '/item/@name',
+        AbstractEntity::ID    =>  '/item/@id',
+    ];
+
 }

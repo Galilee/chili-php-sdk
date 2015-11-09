@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <TaskGetStatusResponse xmlns="http://www.chili-publisher.com/">
+            <TaskGetStatusResult><![CDATA[<task finished="True" started="True" succeeded="True" hasDependantTasks="False" processingTime="62" totalTime="1384" threadNum="5" creationTime="2015-11-06 10:41:47" taskType="pdfGeneration" baseURL="http://chili-demo.galilee.fr//chili/" waitForTaskID="" id="f1a681c5-5078-45eb-8c05-09c321e9025e" userID="c0f63205-4312-40cf-8679-2e93be303afd" userName="form1" itemXML="" hasEditorCliLog="False" userEnvironment="galilee" environmentName="galilee" itemID="3728e7ef-adcb-44a3-83f7-d2949edd9cbe" itemName="" resourceName="Documents" result="&lt;result path=&quot;E:\CHILI_Publisher\data\temp\63a22945-3c5d-454c-9b79-31efdc56c4ab\cc834cf5-b3bb-40fb-9383-e0fe19758a24\snippetHotel.pdf&quot; openInBrowser=&quot;true&quot; url=&quot;http://chili-demo.galilee.fr//chili/galilee/download_tempFile.aspx?path=%5c63a22945-3c5d-454c-9b79-31efdc56c4ab%5ccc834cf5-b3bb-40fb-9383-e0fe19758a24%5csnippetHotel.pdf&quot; relativeURL=&quot;galilee/download_tempFile.aspx?path=%5c63a22945-3c5d-454c-9b79-31efdc56c4ab%5ccc834cf5-b3bb-40fb-9383-e0fe19758a24%5csnippetHotel.pdf&quot; /&gt;" errorMessage="" errorStack="" settingsName="pdf-test" saveDocIfNeeded="True" />]]></TaskGetStatusResult>
+        </TaskGetStatusResponse>
+    </soap:Body>
+</soap:Envelope>

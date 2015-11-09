@@ -7,5 +7,10 @@ namespace Galilee\PPM\SDK\Chili\Entity;
  */
 class ViewPreference extends AbstractEntity
 {
-    // todo
+    const RESOURCE_NAME = 'ViewPreferences';
+
+    protected $availablePropertiesMap = [
+        AbstractEntity::NAME  =>  '/item/@name',
+        AbstractEntity::ID    =>  '/item/@id',
+    ];
 }

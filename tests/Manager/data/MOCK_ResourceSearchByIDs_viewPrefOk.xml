@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <ResourceSearchByIDsResponse xmlns="http://www.chili-publisher.com/">
+            <ResourceSearchByIDsResult><![CDATA[<searchresults><item name="fred" id="9a672df2-4d3d-44cb-bf97-b5ddc0dfc5a0" relativePath="Formation\fred.xml" hasPreviewErrors="false" iconURL="galilee/download.aspx?type=thumb&amp;resourceName=ViewPreferences&amp;id=9a672df2-4d3d-44cb-bf97-b5ddc0dfc5a0&amp;apiKey=Q0Jyyu+UBIW80D0Qyo5KMBrCB68sQgUVdpyjFFZYXG7VLIenG1tjVQGYAKzWDGVRs1DzMo4k+Ix27mnLKI9vTA==&amp;pageNum=1" /></searchresults>]]></ResourceSearchByIDsResult>
+        </ResourceSearchByIDsResponse>
+    </soap:Body>
+</soap:Envelope>
