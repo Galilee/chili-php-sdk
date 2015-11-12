@@ -105,6 +105,8 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Galilee\\PPM\\SDK\\Chili\\Entity\\Document', $duplicated);
         $this->assertEquals($duplicated->getName(), 'copy');
+
+        return $duplicated;
     }
 
     /**
@@ -132,5 +134,43 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $status = $taskInfo->getStatus();
         $this->assertNotEmpty($taskId);
         $this->assertFalse($status[Task::STATUS_FINISHED]);
+    }
+
+    /**
+     * Test 5 : DocumentManager->deleteDocument(...) returns true
+     *
+     * @param $document
+     *
+     * @depends testDuplicateShouldReturnTheNewDocumentEntity
+     */
+    public function testDeleteShouldReturnTrue($document)
+    {
+        // Set scenario name
+        $this->soapCallMock->setScenarioName('ok');
+
+        $manager = new DocumentManager($this->config, $this->apiKey, false);
+        $manager->setSoapCall($this->soapCallMock);
+
+        $result = $manager->deleteDocument($document->getId());
+
+        $this->assertTrue($result);
+    }
+
+
+    /**
+     * Test 6 : DocumentManager->getDocument(...)  throws exception
+     *
+     * @expectedException \Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException
+     */
+    public function testGetDocumentInfoShoulThrowEntityNotFoundException()
+    {
+        // Set scenario name
+        $this->soapCallMock->setScenarioName('notFound');
+
+        $manager = new DocumentManager($this->config, $this->apiKey, false);
+        $manager->setSoapCall($this->soapCallMock);
+
+        //throws EntityNotFoundException
+        $result = $manager->getDocument('3728e7ef-adcb-44a3-83f7-d2949edd9cbi');
     }
 }

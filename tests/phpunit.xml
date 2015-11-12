@@ -19,4 +19,7 @@
     <testsuite name="Manager Test Suite">
         <directory sufix="Test.php">./Manager/</directory>
     </testsuite>
+    <testsuite name="Helper Test Suite">
+        <directory sufix="Test.php">./Helper/</directory>
+    </testsuite>
 </phpunit>

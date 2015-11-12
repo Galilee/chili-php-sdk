@@ -7,9 +7,15 @@ use Galilee\PPM\SDK\Chili\Manager\Document as DocumentManager;
 use Galilee\PPM\SDK\Chili\Manager\Editor;
 use Galilee\PPM\Tests\SDK\Chili\Mock\SoapCall;
 
-class EditorTest extends \PHPUnit_Framework_TestCase {
-
-
+/**
+ * Class EditorTest
+ *
+ * @package Galilee\PPM\Tests\SDK\Chili\Manager
+ *
+ * @backupGlobals disabled
+ */
+class EditorTest extends \PHPUnit_Framework_TestCase
+{
     /**@var SoapCall $soapcall */
     private $soapCallMock = null;
 
@@ -65,9 +71,8 @@ class EditorTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
- * Test 2 : EditorManager->getViewPreference(id) returns ViewPreference entity
- *
- */
+     * Test 2 : EditorManager->getViewPreference(id) returns ViewPreference entity
+     */
     public function testGetViewPreferenceShouldReturnViewPreferenceEntity()
     {
         // Set scenario name

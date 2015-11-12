@@ -68,7 +68,7 @@ class ConfigService {
     private function createConfig($type, $conf)
     {
         $result = null;
-        switch($type){
+        switch ($type) {
             case self::TYPE_PHP_ARRAY :
                 $result = $this->parseArray($conf);
                 break;
@@ -86,11 +86,11 @@ class ConfigService {
         }
 
         $config = new Config();
-        if($this->checkConfiguration($result)){
+        if ($this->checkConfiguration($result)) {
             // set Config object values
-            foreach($result as $key => $value){
+            foreach ($result as $key => $value) {
                 $method = 'set' . ucfirst($key);
-                if(method_exists($config, $method)){
+                if (method_exists($config, $method)) {
                     $config->{$method}($value);
                 }
             }
@@ -112,17 +112,17 @@ class ConfigService {
         libxml_use_internal_errors(true);
         $resultObject = simplexml_load_string($xml, 'SimpleXMLElement');
 
-        if($resultObject === false){
+        if ($resultObject === false) {
             $errors = libxml_get_errors();
             $messages = [];
-            foreach($errors as $error){
+            foreach ($errors as $error) {
                 $messages[] = $error->message;
             }
             throw new InvalidXmlException('Invalid XML : ' . implode("\t", $messages));
         }
         $result = [];
-        if($resultObject instanceof \SimpleXMLElement){
-            foreach($resultObject as $key => $value){
+        if ($resultObject instanceof \SimpleXMLElement) {
+            foreach ($resultObject as $key => $value) {
                 $result[$key] = (string) $value;
             }
         }
@@ -143,7 +143,7 @@ class ConfigService {
     {
         try {
             $decoded = Yaml::parse($yaml);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new InvalidYamlException($e->getMessage());
         }
         return $decoded;
@@ -161,7 +161,7 @@ class ConfigService {
     {
         $decoded = @json_decode($json, true);
 
-        if($decoded === null && json_last_error() != JSON_ERROR_NONE){
+        if ($decoded === null && json_last_error() != JSON_ERROR_NONE) {
             throw new InvalidJsonException('Invalid JSON encoding / decoding. Error code : ' . json_last_error());
         }
 
@@ -176,7 +176,7 @@ class ConfigService {
      */
     protected function parseArray($arr)
     {
-        if(!is_array($arr)){
+        if (!is_array($arr)) {
             throw new InvalidConfigurationException('Illegal configuration format. The argument $arr should be an array (key => value pairs)');
         }
 
@@ -194,17 +194,17 @@ class ConfigService {
      */
     protected function checkConfiguration($config)
     {
-        if(!is_array($config)){
+        if (!is_array($config)) {
             throw new InvalidConfigurationException('Unknown configuration format.');
         }
 
         $missingProp = [];
-        foreach($this->allowedConfigProperties as $property){
-            if (!isset($config[$property])){
+        foreach ($this->allowedConfigProperties as $property) {
+            if (!isset($config[$property])) {
                 $missingProp[] = $property;
             }
         }
-        if(!empty($missingProp)){
+        if (!empty($missingProp)) {
             throw new InvalidConfigurationException('Invalid configuration. Missing properties: ' . implode(', ', $missingProp));
         }
 

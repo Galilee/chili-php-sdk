@@ -7,6 +7,7 @@ use Galilee\PPM\SDK\Chili\Manager\InterfaceSoapCall;
 
 /**
  * Class SoapCall
+ *
  * @package Galilee\PPM\Tests\SDK\Chili\Mock
  */
 class SoapCall implements InterfaceSoapCall{
@@ -60,15 +61,14 @@ class SoapCall implements InterfaceSoapCall{
     public function __call($method, $params = array())
     {
         $mockFilename = $this->mockDirectoryPath . DIRECTORY_SEPARATOR . 'MOCK_' . $method . '_' . $this->scenarioName . '.xml';
-        if(!file_exists($mockFilename)){
+        if (!file_exists($mockFilename)) {
             throw new \Exception('Unable to find mock file: ' . $mockFilename);
         } else {
             $soapXmlResponse = file_get_contents($mockFilename);
             $domXml = new \DOMDocument();
             $domXml->loadXML($soapXmlResponse);
-            $result = $domXml->getElementsByTagName($method . 'Result')->item(0)->nodeValue;
 
-            return $result;
+            return $domXml->getElementsByTagName($method . 'Result')->item(0)->nodeValue;
         }
     }
 }

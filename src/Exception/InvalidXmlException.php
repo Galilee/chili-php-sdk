@@ -2,7 +2,11 @@
 
 namespace Galilee\PPM\SDK\Chili\Exception;
 
-
-class InvalidXmlException extends \Exception {
-
+/**
+ * Class InvalidXmlException
+ *
+ * @package Galilee\PPM\SDK\Chili\Exception
+ */
+class InvalidXmlException extends \Exception
+{
 }

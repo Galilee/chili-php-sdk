@@ -64,6 +64,7 @@ class Config implements InterfaceConfig{
 
     /**
      * @param string $login
+     *
      * @return $this
      */
     public function setLogin($login)
@@ -74,6 +75,7 @@ class Config implements InterfaceConfig{
 
     /**
      * @param string $password
+     *
      * @return $this
      */
     public function setPassword($password)
@@ -84,6 +86,7 @@ class Config implements InterfaceConfig{
 
     /**
      * @param string $wsdlUrl
+     *
      * @return $this
      */
     public function setWsdlUrl($wsdlUrl)
@@ -94,6 +97,7 @@ class Config implements InterfaceConfig{
 
     /**
      * @param string $environment
+     *
      * @return $this
      */
     public function setEnvironment($environment)
@@ -104,6 +108,7 @@ class Config implements InterfaceConfig{
 
     /**
      * @param string $privateUrl
+     *
      * @return $this
      */
     public function setPrivateUrl($privateUrl)
@@ -114,6 +119,7 @@ class Config implements InterfaceConfig{
 
     /**
      * @param string $publicUrl
+     *
      * @return $this
      */
     public function setPublicUrl($publicUrl)

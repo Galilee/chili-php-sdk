@@ -7,10 +7,11 @@ use Galilee\PPM\SDK\Chili\Entity\DocumentConstraint;
 use Galilee\PPM\SDK\Chili\Entity\ViewPreference;
 use Galilee\PPM\SDK\Chili\Entity\Workspace;
 use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+use Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException;
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
- * Class Editor.
+ * Class Editor
  */
 class Editor extends AbstractManager
 {
@@ -21,16 +22,13 @@ class Editor extends AbstractManager
      *
      * @return Workspace|null
      *
-     * @throws \Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function getWorkspace($id)
     {
         $result = $this->searchResourceById($id, Workspace::RESOURCE_NAME);
-        if ($result) {
-            return new Workspace($result);
-        }
 
-        return null;
+        return new Workspace($result);
     }
 
     /**
@@ -40,16 +38,14 @@ class Editor extends AbstractManager
      *
      * @return ViewPreference|null
      *
-     * @throws \Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function getViewPreference($id)
     {
         $result = $this->searchResourceById($id, ViewPreference::RESOURCE_NAME);
-        if ($result) {
-            return new ViewPreference($result);
-        }
 
-        return null;
+        return new ViewPreference($result);
+
     }
 
     /**
@@ -59,16 +55,13 @@ class Editor extends AbstractManager
      *
      * @return DocumentConstraint|null
      *
-     * @throws \Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function getDocumentConstraint($id){
 
         $result = $this->searchResourceById($id, DocumentConstraint::RESOURCE_NAME);
-        if ($result) {
-            return new DocumentConstraint($result);
-        }
 
-        return null;
+        return new DocumentConstraint($result);
     }
 
     /**
@@ -86,16 +79,16 @@ class Editor extends AbstractManager
     public function getEditor(DocumentEntity $document, Workspace $workspace, ViewPreference $viewPreference, DocumentConstraint $constraint /*, $language*/)
     {
         $xmlResponse = $this->soapCall->DocumentGetEditorURL([
-            'itemID' => $document->getId(),
-            'workSpaceID' => $workspace->getId(),
-            'viewPrefsID' => $viewPreference->getId(),
-            'constraintsID' => $constraint->getId(),
-            'viewerOnly' => false,
+            'itemID'           => $document->getId(),
+            'workSpaceID'      => $workspace->getId(),
+            'viewPrefsID'      => $viewPreference->getId(),
+            'constraintsID'    => $constraint->getId(),
+            'viewerOnly'       => false,
             'forAnonymousUser' => false,
         ]);
 
         $nodeList = Parser::get($xmlResponse, '//urlInfo/@relativeURL');
-        if($nodeList->length == 1){
+        if ($nodeList->length == 1) {
             return $nodeList->item(0)->nodeValue;
         }
 

@@ -2,16 +2,20 @@
 
 namespace Galilee\PPM\Tests\SDK\Chili\Manager;
 
-
 use Galilee\PPM\SDK\Chili\Config\ConfigService;
 use Galilee\PPM\SDK\Chili\Entity\Task;
 use Galilee\PPM\SDK\Chili\Manager\Document as DocumentManager;
 use Galilee\PPM\SDK\Chili\Manager\Task as TaskManager;
 use Galilee\PPM\Tests\SDK\Chili\Mock\SoapCall;
 
-class TaskTest extends \PHPUnit_Framework_TestCase {
-
-
+/**
+ * Class TaskTest
+ *
+ * @package Galilee\PPM\Tests\SDK\Chili\Manager
+ * @backupGlobals disabled
+ */
+class TaskTest extends \PHPUnit_Framework_TestCase
+{
     /**@var SoapCall $soapcall */
     private $soapCallMock = null;
 

@@ -5,7 +5,9 @@ namespace Galilee\PPM\SDK\Chili\Helper;
 use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
 
 /**
- * Class Parser.
+ * Class Parser
+ *
+ * @package Galilee\PPM\SDK\Chili\Helper
  */
 class Parser
 {
@@ -25,7 +27,7 @@ class Parser
         $domDoc = self::xmlToDomDoc($xml);
 
         $xPath = new \DOMXPath($domDoc);
-        $nodeList = $xPath->query($expression);
+        $nodeList = @$xPath->query($expression);
 
         if ($nodeList === false) {
             throw new InvalidXpathExpressionException('The expression "' . $expression . '" is not valid for DOMXPath::query()');
@@ -35,6 +37,8 @@ class Parser
     }
 
     /**
+     * Transform an xml string into a \DOMDocument object
+     *
      * @param string $xml
      *
      * @return \DOMDocument

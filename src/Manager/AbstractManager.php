@@ -3,6 +3,7 @@
 namespace Galilee\PPM\SDK\Chili\Manager;
 
 use Galilee\PPM\SDK\Chili\Config\Config;
+use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
 use Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
 use Galilee\PPM\SDK\Chili\Helper\Parser;
@@ -30,7 +31,7 @@ abstract class AbstractManager
         $this->config = $config;
 
         //init soap client
-        if($initSoapCall === true){
+        if ($initSoapCall === true) {
             $this->soapCall = new SoapCall($config, $apiKey);
         }
     }
@@ -53,7 +54,8 @@ abstract class AbstractManager
      * @return SoapCall|null
      *
      */
-    public function getSoapCall(){
+    public function getSoapCall()
+    {
         return $this->soapCall;
     }
 
@@ -64,23 +66,44 @@ abstract class AbstractManager
      * @param string $resourceName
      *
      * @return \DOMNodeList|\DOMNode|null
-     * @throws InvalidXpathExpressionException
      *
+     * @throws EntityNotFoundException
      */
     public function searchResourceById($id, $resourceName)
     {
-
         $xmlResponse = $this->soapCall->ResourceSearchByIDs([
             'resourceName' => $resourceName,
-            'IDs' => $id
+            'IDs'          => $id
         ]);
         $result = Parser::get($xmlResponse, '//searchresults/item');
-        if($result->length == 1){
+        if ($result->length == 1) {
             $item = $result->item(0);
 
             return $item->ownerDocument->saveXML($item);
         }
 
-       throw new EntityNotFoundException('Resource not found for resourceName=' . $resourceName . ' and id=' . $id);
+        throw new EntityNotFoundException('Resource not found for resourceName=' . $resourceName . ' and id=' . $id);
+}
+
+    /**
+     * Delete a Chili Resource Item by id (and type)
+     *
+     * @param $id
+     * @param $resourceName
+     *
+     * @return bool
+     *
+     * @throws ChiliSoapCallException
+     */
+    protected function deleteResourceById($id, $resourceName)
+    {
+        $xmlResponse = $this->soapCall->ResourceItemDelete([
+            'resourceName' => $resourceName,
+            'itemID'       => $id
+        ]);
+
+        $result = Parser::get($xmlResponse, '/ok');
+
+        return ($result->length == 1);
     }
 }

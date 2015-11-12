@@ -44,8 +44,8 @@ class SoapCall implements InterfaceSoapCall
             try {
                 $soapXmlResponse = $this->soapClient->GenerateApiKey([
                     'environmentNameOrURL' => $this->config->getEnvironment(),
-                    'userName' => $this->config->getLogin(),
-                    'password' => $this->config->getPassword(),
+                    'userName'             => $this->config->getLogin(),
+                    'password'             => $this->config->getPassword(),
                 ]);
 
                 $queryResult = Parser::get($soapXmlResponse->GenerateApiKeyResult, '/apiKey[1]/@key');

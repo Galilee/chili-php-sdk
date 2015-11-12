@@ -1,14 +1,19 @@
 <?php
 
-namespace Galilee\PPM\Tests\SDK\Chili\Entity;
+namespace Galilee\PPM\Tests\SDK\Chili\Exception;
 
 /**
  * Class ExampleExceptionTest.
+ *
+ * @backupGlobals disabled
  */
 class ExampleExceptionTest extends \PHPUnit_Framework_TestCase
 {
     public function testExample()
     {
-        $this->assertTrue(1 == 1);
+        $this->markTestIncomplete(
+            'This test Class has not been implemented yet.'
+        );
+        //$this->assertTrue(1 == 1);
     }
 }

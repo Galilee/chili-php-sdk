@@ -12,8 +12,8 @@ class ExportProfile extends AbstractEntity
     protected $name = null;
 
     protected $availablePropertiesMap = [
-        AbstractEntity::ID    =>  '/item/@id',
-        AbstractEntity::NAME    =>  '/item/@name',
+        AbstractEntity::ID    => '/item/@id',
+        AbstractEntity::NAME  => '/item/@name',
     ];
 
     /**
@@ -25,9 +25,9 @@ class ExportProfile extends AbstractEntity
      */
     public function getName()
     {
-        if(!$this->name){
+        if (!$this->name) {
             $nodeList = $this->get(AbstractEntity::NAME);
-            if($nodeList->length == 1) {
+            if ($nodeList->length == 1) {
                 $this->name = $nodeList->item(0)->nodeValue;
             }
         }

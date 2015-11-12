@@ -3,7 +3,7 @@
 namespace Galilee\PPM\SDK\Chili\Manager;
 
 use Galilee\PPM\SDK\Chili\Entity\Task as TaskEntity;
-use Galilee\PPM\SDK\Chili\Helper\Parser;
+use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
 
 /**
  * Class Task.
@@ -17,11 +17,13 @@ class Task extends AbstractManager
      *
      * @return array
      *
-     * @throws \Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException
+     * @throws ChiliSoapCallException
      */
     public function getStatus(TaskEntity $task)
     {
-        $xmlResponse = $this->soapCall->TaskGetStatus(['taskID' => $task->getId()]);
+        $xmlResponse = $this->soapCall->TaskGetStatus([
+            'taskID' => $task->getId()
+        ]);
         $foundTask = new TaskEntity($xmlResponse);
 
         return $foundTask->getStatus();
@@ -31,8 +33,8 @@ class Task extends AbstractManager
      * @param TaskEntity $task
      * @param int        $timeout
      */
-    public function waitFor(TaskEntity $task, $timeout = null)
+    /*public function waitFor(TaskEntity $task, $timeout = null)
     {
         // todo ?
-    }
+    }*/
 }
