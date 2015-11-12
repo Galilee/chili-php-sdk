@@ -2,9 +2,11 @@
 
 namespace Galilee\PPM\SDK\Chili\Config;
 
-
-class Config implements InterfaceConfig{
-
+/**
+ * Class Config.
+ */
+class Config implements InterfaceConfig
+{
     protected $login;
     protected $password;
     protected $wsdlUrl;
@@ -25,7 +27,7 @@ class Config implements InterfaceConfig{
      */
     public function getPassword()
     {
-         return $this->password;
+        return $this->password;
     }
 
     /**
@@ -70,6 +72,7 @@ class Config implements InterfaceConfig{
     public function setLogin($login)
     {
         $this->login = $login;
+
         return $this;
     }
 
@@ -81,6 +84,7 @@ class Config implements InterfaceConfig{
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -92,6 +96,7 @@ class Config implements InterfaceConfig{
     public function setWsdlUrl($wsdlUrl)
     {
         $this->wsdlUrl = $wsdlUrl;
+
         return $this;
     }
 
@@ -103,6 +108,7 @@ class Config implements InterfaceConfig{
     public function setEnvironment($environment)
     {
         $this->environment = $environment;
+
         return $this;
     }
 
@@ -114,6 +120,7 @@ class Config implements InterfaceConfig{
     public function setPrivateUrl($privateUrl)
     {
         $this->privateUrl = $privateUrl;
+
         return $this;
     }
 
@@ -125,6 +132,7 @@ class Config implements InterfaceConfig{
     public function setPublicUrl($publicUrl)
     {
         $this->publicUrl = $publicUrl;
+
         return $this;
     }
 }

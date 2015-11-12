@@ -1,6 +1,7 @@
 <?php
 
 namespace Galilee\PPM\Tests\SDK\Chili\Manager;
+
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
@@ -20,7 +21,6 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 <?xml version="1.0" encoding="iso-8859-1"?>
 <searchresults><item name="Constraint 01" id="1e778fb7-ed93-4ca2-aadf-ce5339868fe5" relativePath="" hasPreviewErrors="false" preserveExistingDocConstraints="False" preserveExistingLayerConstraints="False" preserveExistingPageConstraints="False" iconURL="galilee/download.aspx?type=thumb&amp;resourceName=DocumentConstraints&amp;id=1e778fb7-ed93-4ca2-aadf-ce5339868fe5&amp;apiKey=Q0Jyyu+UBIXcY38Te0VMOY79qDH4V84oKkVWXQ1RADVDxXS0bFDId+cBVpEkBc2g_kA3RmczjTqZ4ySIJWqPEg==&amp;pageNum=1"><constraintItems></constraintItems></item></searchresults>
 XML;
-
     }
 
     public function tearDown()
@@ -30,7 +30,7 @@ XML;
     }
 
     /**
-     * Test 1 : Parser::get() returns \DOMNodeList
+     * Test 1 : Parser::get() returns \DOMNodeList.
      */
     public function testGetShouldReturnDOMNodeList()
     {
@@ -42,7 +42,7 @@ XML;
     }
 
     /**
-     * Test 2 : Parser::get() throws exception
+     * Test 2 : Parser::get() throws exception.
      *
      * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException
      */
@@ -53,7 +53,7 @@ XML;
     }
 
     /**
-     * Test 3 : Parser::xmlToDomDoc() returns \DOMDocument
+     * Test 3 : Parser::xmlToDomDoc() returns \DOMDocument.
      */
     public function testXmlToDomDocShouldReturnDOMDocumentObject()
     {

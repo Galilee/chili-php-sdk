@@ -22,10 +22,10 @@ abstract class AbstractEntity implements InterfaceEntity
     protected $availablePropertiesMap = [];
 
     /**
-     * Set the entity xml definition
+     * Set the entity xml definition.
      *
      * @param string $xml
-     * @param bool $lazy - set lazily the entity ID
+     * @param bool   $lazy - set lazily the entity ID
      */
     public function __construct($xml, $lazy = true)
     {
@@ -36,16 +36,17 @@ abstract class AbstractEntity implements InterfaceEntity
     }
 
     /**
-     * Get the entity ID
+     * Get the entity ID.
      *
      * @return string|null
      *
      * @throws InvalidXpathExpressionException
      */
-    public function getId(){
+    public function getId()
+    {
         if (!$this->id) {
             $nodeList = $this->get(self::ID);
-            if($nodeList->length == 1){
+            if ($nodeList->length == 1) {
                 $this->id = $nodeList->item(0)->nodeValue;
             }
         }
@@ -54,7 +55,7 @@ abstract class AbstractEntity implements InterfaceEntity
     }
 
     /**
-     * Get the entity XML definition
+     * Get the entity XML definition.
      *
      * @return string
      */

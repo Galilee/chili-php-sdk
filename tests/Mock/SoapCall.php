@@ -6,12 +6,10 @@ use Galilee\PPM\SDK\Chili\Config\Config;
 use Galilee\PPM\SDK\Chili\Manager\InterfaceSoapCall;
 
 /**
- * Class SoapCall
- *
- * @package Galilee\PPM\Tests\SDK\Chili\Mock
+ * Class SoapCall.
  */
-class SoapCall implements InterfaceSoapCall{
-
+class SoapCall implements InterfaceSoapCall
+{
     protected $apiKey;
 
     protected $config;
@@ -21,8 +19,6 @@ class SoapCall implements InterfaceSoapCall{
     private $mockDirectoryPath;
 
     /**
-     *
-     *
      * @param Config $config
      * @param string $apiKey
      */
@@ -30,14 +26,12 @@ class SoapCall implements InterfaceSoapCall{
     {
         $this->apiKey = $apiKey;
         $this->mockDirectoryPath = $mockDirectoryPath;
-
     }
 
     public function getApiKey()
     {
         return $this->apiKey;
     }
-
 
     public function setScenarioName($scenarioName)
     {
@@ -52,23 +46,24 @@ class SoapCall implements InterfaceSoapCall{
     }
 
     /**
-     * Get content from a Mock xml file
+     * Get content from a Mock xml file.
      *
      * @param string $method
-     * @param array $params
+     * @param array  $params
+     *
      * @return string
      */
     public function __call($method, $params = array())
     {
-        $mockFilename = $this->mockDirectoryPath . DIRECTORY_SEPARATOR . 'MOCK_' . $method . '_' . $this->scenarioName . '.xml';
+        $mockFilename = $this->mockDirectoryPath.DIRECTORY_SEPARATOR.'MOCK_'.$method.'_'.$this->scenarioName.'.xml';
         if (!file_exists($mockFilename)) {
-            throw new \Exception('Unable to find mock file: ' . $mockFilename);
+            throw new \Exception('Unable to find mock file: '.$mockFilename);
         } else {
             $soapXmlResponse = file_get_contents($mockFilename);
             $domXml = new \DOMDocument();
             $domXml->loadXML($soapXmlResponse);
 
-            return $domXml->getElementsByTagName($method . 'Result')->item(0)->nodeValue;
+            return $domXml->getElementsByTagName($method.'Result')->item(0)->nodeValue;
         }
     }
 }

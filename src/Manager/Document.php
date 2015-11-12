@@ -10,15 +10,15 @@ use Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException;
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
- * Class Document - manages document entities
+ * Class Document - manages document entities.
  */
 class Document extends AbstractManager
 {
     /**
-     * Get a Chili document by ID
+     * Get a Chili document by ID.
      *
      * @param string $id
-     * @param bool $lazy - if true sets the property $id of the Document entity
+     * @param bool   $lazy - if true sets the property $id of the Document entity
      *
      * @return DocumentEntity $document
      *
@@ -31,7 +31,7 @@ class Document extends AbstractManager
         $this->searchResourceById($id, DocumentEntity::RESOURCE_NAME);
 
         $xmlResponse = $this->soapCall->DocumentGetInfo([
-            'itemID'   => $id,
+            'itemID' => $id,
             'extended' => 0,
         ]);
 
@@ -39,11 +39,11 @@ class Document extends AbstractManager
     }
 
     /**
-     * Get the preview URL of a Chili document
+     * Get the preview URL of a Chili document.
      *
      * @param DocumentEntity $document
-     * @param string $type (thumbnail | medium | full | swf)
-     * @param int $pageNum
+     * @param string         $type     (thumbnail | medium | full | swf)
+     * @param int            $pageNum
      *
      * @return string $url
      *
@@ -53,9 +53,9 @@ class Document extends AbstractManager
     {
         $xmlResponse = $this->soapCall->ResourceItemGetURL([
             'resourceName' => DocumentEntity::RESOURCE_NAME,
-            'itemID'       => $document->getId(),
-            'type'         => $type,
-            'pageNum'      => $pageNum,
+            'itemID' => $document->getId(),
+            'type' => $type,
+            'pageNum' => $pageNum,
         ]);
 
         $nodeList = Parser::get($xmlResponse, '/urlInfo[1]/@url');
@@ -63,11 +63,11 @@ class Document extends AbstractManager
             return $nodeList->item(0)->nodeValue;
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Duplicate a Chili document
+     * Duplicate a Chili document.
      *
      * @param DocumentEntity $document
      *
@@ -79,9 +79,9 @@ class Document extends AbstractManager
     {
         $xmlResponse = $this->soapCall->ResourceItemCopy([
             'resourceName' => DocumentEntity::RESOURCE_NAME,
-            'itemID'       => $document->getId(),
-            'newName'      => $newName,
-            'folderPath'   => $folderPath,
+            'itemID' => $document->getId(),
+            'newName' => $newName,
+            'folderPath' => $folderPath,
         ]);
         $nodeList = Parser::get($xmlResponse, '/item[1]/@id');
         if ($nodeList->length == 1) {
@@ -90,15 +90,15 @@ class Document extends AbstractManager
             return $this->getDocument($duplicatedDocId);
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Generate a PDF from a Chili document and return the task information
+     * Generate a PDF from a Chili document and return the task information.
      *
      * @param DocumentEntity $document
-     * @param ExportProfile $exportProfile
-     * @param int $taskPriority (1-10)
+     * @param ExportProfile  $exportProfile
+     * @param int            $taskPriority  (1-10)
      *
      * @return Task $task
      *
@@ -107,8 +107,8 @@ class Document extends AbstractManager
     public function buildPdf(DocumentEntity $document, ExportProfile $exportProfile, $taskPriority = 7)
     {
         $xmlResponse = $this->soapCall->DocumentCreatePDF([
-            'itemID'       => $document->getId(),
-            'settingsXml'  => $exportProfile->getXmlDef(),
+            'itemID' => $document->getId(),
+            'settingsXml' => $exportProfile->getXmlDef(),
             'taskPriority' => $taskPriority,
         ]);
 
@@ -116,7 +116,7 @@ class Document extends AbstractManager
     }
 
     /**
-     * Get Chili document settings for the PDF export
+     * Get Chili document settings for the PDF export.
      *
      * @param string $id
      *
@@ -132,14 +132,14 @@ class Document extends AbstractManager
 
         $xmlResponse = $this->soapCall->ResourceItemGetDefinitionXML([
             'resourceName' => ExportProfile::RESOURCE_NAME,
-            'itemID'       => $id,
+            'itemID' => $id,
         ]);
 
         return new ExportProfile($xmlResponse);
     }
 
     /**
-     * Delete a Chili Document
+     * Delete a Chili Document.
      *
      * @param $id
      *

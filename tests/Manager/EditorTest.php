@@ -8,9 +8,8 @@ use Galilee\PPM\SDK\Chili\Manager\Editor;
 use Galilee\PPM\Tests\SDK\Chili\Mock\SoapCall;
 
 /**
- * Class EditorTest
+ * Class EditorTest.
  *
- * @package Galilee\PPM\Tests\SDK\Chili\Manager
  *
  * @backupGlobals disabled
  */
@@ -23,27 +22,29 @@ class EditorTest extends \PHPUnit_Framework_TestCase
 
     private $apiKey = '111111111111111';
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
 
         $confType = 'php_array';
         $configArr = [
-            'login'       => 'login',
-            'password'    => '1234',
-            'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
+            'login' => 'login',
+            'password' => '1234',
+            'wsdlUrl' => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
-            'privateUrl'  => 'http://private.test.fr',
-            'publicUrl'   => 'http://public.test.fr',
+            'privateUrl' => 'http://private.test.fr',
+            'publicUrl' => 'http://public.test.fr',
         ];
 
         $configService = new ConfigService($confType, $configArr);
-        $mockDirectoryPath = __DIR__ . DIRECTORY_SEPARATOR . 'data';
+        $mockDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'data';
 
         $this->config = $configService->getConfig();
         $this->soapCallMock = new SoapCall($this->config, $mockDirectoryPath, $this->apiKey);
     }
 
-    public function tearDown(){
+    public function tearDown()
+    {
         parent::tearDown();
 
         $this->soapCallMock = null;
@@ -51,8 +52,7 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 1 : EditorManager->getWokspace(id) returns Workspace entity
-     *
+     * Test 1 : EditorManager->getWokspace(id) returns Workspace entity.
      */
     public function testGetWorkspaceShouldReturnWorkspaceEntity()
     {
@@ -71,7 +71,7 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 2 : EditorManager->getViewPreference(id) returns ViewPreference entity
+     * Test 2 : EditorManager->getViewPreference(id) returns ViewPreference entity.
      */
     public function testGetViewPreferenceShouldReturnViewPreferenceEntity()
     {
@@ -90,8 +90,7 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 3 : EditorManager->getDocumentConstraint(id) returns DocumentConstraint entity
-     *
+     * Test 3 : EditorManager->getDocumentConstraint(id) returns DocumentConstraint entity.
      */
     public function testGetDocumentConstraintShouldReturnDocumentConstraintEntity()
     {
@@ -110,7 +109,7 @@ class EditorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 4 : EditorManager->getEditor(...) returns Chili Editor
+     * Test 4 : EditorManager->getEditor(...) returns Chili Editor.
      *
      * @depends testGetWorkspaceShouldReturnWorkspaceEntity
      * @depends testGetViewPreferenceShouldReturnViewPreferenceEntity

@@ -3,7 +3,7 @@
 namespace Galilee\PPM\SDK\Chili\Entity;
 
 /**
- * Class ExportProfile - PDF export settings of a Chili document
+ * Class ExportProfile - PDF export settings of a Chili document.
  */
 class ExportProfile extends AbstractEntity
 {
@@ -12,12 +12,12 @@ class ExportProfile extends AbstractEntity
     protected $name = null;
 
     protected $availablePropertiesMap = [
-        AbstractEntity::ID    => '/item/@id',
-        AbstractEntity::NAME  => '/item/@name',
+        AbstractEntity::ID => '/item/@id',
+        AbstractEntity::NAME => '/item/@name',
     ];
 
     /**
-     * Get ExportProfile name
+     * Get ExportProfile name.
      *
      * @return string
      *

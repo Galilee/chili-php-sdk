@@ -3,9 +3,7 @@
 namespace Galilee\PPM\SDK\Chili\Exception;
 
 /**
- * Class InvalidJsonException
- *
- * @package Galilee\PPM\SDK\Chili\Exception
+ * Class InvalidJsonException.
  */
 class InvalidJsonException extends \Exception
 {

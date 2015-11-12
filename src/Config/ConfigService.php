@@ -2,15 +2,17 @@
 
 namespace Galilee\PPM\SDK\Chili\Config;
 
-
 use Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidJsonException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidXmlException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidYamlException;
 use Symfony\Component\Yaml\Yaml;
 
-class ConfigService {
-
+/**
+ * Class ConfigService.
+ */
+class ConfigService
+{
     private $config = null;
 
     const TYPE_XML = 'xml';
@@ -22,7 +24,7 @@ class ConfigService {
         self::TYPE_XML,
         self::TYPE_YAML,
         self::TYPE_JSON,
-        self::TYPE_PHP_ARRAY
+        self::TYPE_PHP_ARRAY,
     ];
 
     protected $allowedConfigProperties = [
@@ -35,9 +37,9 @@ class ConfigService {
     ];
 
     /**
-     * init configuration object
+     * init configuration object.
      *
-     * @param string $type
+     * @param string       $type
      * @param string|array $conf - should array (key-value pairs), json, yaml or xml format
      *
      * @return Config
@@ -50,15 +52,17 @@ class ConfigService {
     /**
      * @return Config|null
      */
-    public function getConfig(){
+    public function getConfig()
+    {
         return $this->config;
     }
 
     /**
-     * Creates Config object from the given $conf parameter
+     * Creates Config object from the given $conf parameter.
      *
-     * @param string $type
+     * @param string       $type
      * @param string|array $conf
+     *
      * @throws InvalidConfigurationException
      * @throws InvalidJsonException
      * @throws InvalidYamlException
@@ -82,14 +86,14 @@ class ConfigService {
                 $result = $this->parseYaml($conf);
                 break;
             default:
-                throw new InvalidConfigurationException('Invalid configuration type. Expected one of: '. implode(', ', $this->allowedTypes));
+                throw new InvalidConfigurationException('Invalid configuration type. Expected one of: '.implode(', ', $this->allowedTypes));
         }
 
         $config = new Config();
         if ($this->checkConfiguration($result)) {
             // set Config object values
             foreach ($result as $key => $value) {
-                $method = 'set' . ucfirst($key);
+                $method = 'set'.ucfirst($key);
                 if (method_exists($config, $method)) {
                     $config->{$method}($value);
                 }
@@ -97,11 +101,10 @@ class ConfigService {
         }
 
         return $config;
-
     }
 
     /**
-     * Transforms xml to array
+     * Transforms xml to array.
      *
      * @param string $xml
      *
@@ -118,7 +121,7 @@ class ConfigService {
             foreach ($errors as $error) {
                 $messages[] = $error->message;
             }
-            throw new InvalidXmlException('Invalid XML : ' . implode("\t", $messages));
+            throw new InvalidXmlException('Invalid XML : '.implode("\t", $messages));
         }
         $result = [];
         if ($resultObject instanceof \SimpleXMLElement) {
@@ -132,9 +135,10 @@ class ConfigService {
 
     /**
      * Transforms yaml to array
-     * (uses Symfony Yaml component)
+     * (uses Symfony Yaml component).
      *
      * @param string $yaml
+     *
      * @throws InvalidYamlException
      *
      * @return array
@@ -146,15 +150,17 @@ class ConfigService {
         } catch (\Exception $e) {
             throw new InvalidYamlException($e->getMessage());
         }
+
         return $decoded;
     }
 
     /**
-     * Transforms JSON to array
+     * Transforms JSON to array.
      *
      * @param string $json
      *
      * @return array
+     *
      * @throws InvalidJsonException
      */
     protected function parseJson($json)
@@ -162,14 +168,13 @@ class ConfigService {
         $decoded = @json_decode($json, true);
 
         if ($decoded === null && json_last_error() != JSON_ERROR_NONE) {
-            throw new InvalidJsonException('Invalid JSON encoding / decoding. Error code : ' . json_last_error());
+            throw new InvalidJsonException('Invalid JSON encoding / decoding. Error code : '.json_last_error());
         }
 
         return $decoded;
     }
 
     /**
-     *
      * @param array $arr
      *
      * @return array
@@ -183,13 +188,13 @@ class ConfigService {
         return $arr;
     }
 
-
     /**
-     * Verifies configuration properties
+     * Verifies configuration properties.
      *
      * @param array $config
      *
      * @return bool
+     *
      * @throws InvalidConfigurationException
      */
     protected function checkConfiguration($config)
@@ -205,7 +210,7 @@ class ConfigService {
             }
         }
         if (!empty($missingProp)) {
-            throw new InvalidConfigurationException('Invalid configuration. Missing properties: ' . implode(', ', $missingProp));
+            throw new InvalidConfigurationException('Invalid configuration. Missing properties: '.implode(', ', $missingProp));
         }
 
         return true;

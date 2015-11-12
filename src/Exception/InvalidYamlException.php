@@ -3,9 +3,7 @@
 namespace Galilee\PPM\SDK\Chili\Exception;
 
 /**
- * Class InvalidYamlException
- *
- * @package Galilee\PPM\SDK\Chili\Exception
+ * Class InvalidYamlException.
  */
 class InvalidYamlException extends \Exception
 {

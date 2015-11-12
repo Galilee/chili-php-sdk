@@ -1,6 +1,7 @@
 <?php
 
 namespace Galilee\PPM\SDK\Chili\Entity;
+
 use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
 
 /**
@@ -9,14 +10,14 @@ use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
 interface InterfaceEntity
 {
     /**
-     * Get the entity ID
+     * Get the entity ID.
      *
      * @return string|null
      */
     public function getId();
 
     /**
-     * Get the entity XML definition
+     * Get the entity XML definition.
      *
      * @return string|null
      */

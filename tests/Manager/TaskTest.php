@@ -9,9 +9,8 @@ use Galilee\PPM\SDK\Chili\Manager\Task as TaskManager;
 use Galilee\PPM\Tests\SDK\Chili\Mock\SoapCall;
 
 /**
- * Class TaskTest
+ * Class TaskTest.
  *
- * @package Galilee\PPM\Tests\SDK\Chili\Manager
  * @backupGlobals disabled
  */
 class TaskTest extends \PHPUnit_Framework_TestCase
@@ -23,27 +22,29 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     private $apiKey = '111111111111111';
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
 
         $confType = 'php_array';
         $configArr = [
-            'login'       => 'login',
-            'password'    => '1234',
-            'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
+            'login' => 'login',
+            'password' => '1234',
+            'wsdlUrl' => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
-            'privateUrl'  => 'http://private.test.fr',
-            'publicUrl'   => 'http://public.test.fr',
+            'privateUrl' => 'http://private.test.fr',
+            'publicUrl' => 'http://public.test.fr',
         ];
 
         $configService = new ConfigService($confType, $configArr);
-        $mockDirectoryPath = __DIR__ . DIRECTORY_SEPARATOR . 'data';
+        $mockDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'data';
 
         $this->config = $configService->getConfig();
         $this->soapCallMock = new SoapCall($this->config, $mockDirectoryPath, $this->apiKey);
     }
 
-    public function tearDown(){
+    public function tearDown()
+    {
         parent::tearDown();
 
         $this->soapCallMock = null;
@@ -51,8 +52,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 1 : TaskManager->getStatus(...) returns task status
-     *
+     * Test 1 : TaskManager->getStatus(...) returns task status.
      */
     public function testGetStatusShouldReturnArrayWithStatusInfo()
     {
