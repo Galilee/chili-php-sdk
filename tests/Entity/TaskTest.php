@@ -1,38 +1,38 @@
 <?php
 
 namespace Galilee\PPM\Tests\SDK\Chili\Entity;
-
 use Galilee\PPM\SDK\Chili\Entity\Task;
+use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
- * Class TaskTest.
+ * Class TaskTest
  *
+ * @package Galilee\PPM\Tests\SDK\Chili\Entity
  * @backupGlobals disabled
  */
 class TaskTest extends \PHPUnit_Framework_TestCase
 {
     private $xml;
 
-    public function setUp()
-    {
+    public function setUp(){
         parent::setUp();
 
         $xml = new \DOMDocument();
-        $xml->loadXML(file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'task.xml'));
+        $xml->loadXML( file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'task.xml'));
         $info = $xml->getElementsByTagName('TaskGetStatusResult')->item(0)->textContent;
 
         $this->xml = $info;
     }
 
-    public function tearDown()
-    {
+    public function tearDown(){
         parent::tearDown();
 
         $this->xml = null;
     }
 
+
     /**
-     * Test 1 : TaskEntity->getId() returns task id.
+     * Test 1 : TaskEntity->getId() returns task id
      */
     public function testGetIdShouldReturnStringTaskId()
     {
@@ -42,10 +42,9 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 2 : TaskEntity->getStatus() returns task status info.
+     * Test 2 : TaskEntity->getStatus() returns task status info
      */
-    public function testGetStatusShouldReturnStatusInfo()
-    {
+    public function testGetStatusShouldReturnStatusInfo(){
         $task = new Task($this->xml);
         $status = $task->getStatus();
 

@@ -5,12 +5,14 @@ namespace Galilee\PPM\SDK\Chili\Helper;
 use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
 
 /**
- * Class Parser.
+ * Class Parser
+ *
+ * @package Galilee\PPM\SDK\Chili\Helper
  */
 class Parser
 {
     /**
-     * Get xpath expression query result from the given xml.
+     * Get xpath expression query result from the given xml
      *
      * @param string $xml
      * @param string $expression
@@ -28,14 +30,14 @@ class Parser
         $nodeList = @$xPath->query($expression);
 
         if ($nodeList === false) {
-            throw new InvalidXpathExpressionException('The expression "'.$expression.'" is not valid for DOMXPath::query()');
+            throw new InvalidXpathExpressionException('The expression "' . $expression . '" is not valid for DOMXPath::query()');
         }
 
         return $nodeList;
     }
 
     /**
-     * Transform an xml string into a \DOMDocument object.
+     * Transform an xml string into a \DOMDocument object
      *
      * @param string $xml
      *

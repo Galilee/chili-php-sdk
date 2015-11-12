@@ -11,6 +11,6 @@ class ViewPreference extends AbstractEntity
 
     protected $availablePropertiesMap = [
         AbstractEntity::NAME => '/item/@name',
-        AbstractEntity::ID => '/item/@id',
+        AbstractEntity::ID   => '/item/@id',
     ];
 }

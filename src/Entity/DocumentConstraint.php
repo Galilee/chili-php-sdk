@@ -3,7 +3,9 @@
 namespace Galilee\PPM\SDK\Chili\Entity;
 
 /**
- * Class DocumentConstraint.
+ * Class DocumentConstraint
+ *
+ * @package Galilee\PPM\SDK\Chili\Entity
  */
 class DocumentConstraint extends AbstractEntity
 {

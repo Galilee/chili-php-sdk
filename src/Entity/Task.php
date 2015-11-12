@@ -1,7 +1,6 @@
 <?php
 
 namespace Galilee\PPM\SDK\Chili\Entity;
-
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
@@ -24,7 +23,7 @@ class Task extends AbstractEntity
     ];
 
     /**
-     * Get task status information.
+     * Get task status information
      *
      * @return array
      *

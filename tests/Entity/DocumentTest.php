@@ -1,38 +1,37 @@
 <?php
 
 namespace Galilee\PPM\Tests\SDK\Chili\Entity;
-
 use Galilee\PPM\SDK\Chili\Entity\Document;
 
 /**
- * Class DocumentTest.
+ * Class DocumentTest
  *
+ * @package Galilee\PPM\Tests\SDK\Chili\Entity
  * @backupGlobals disabled
  */
 class DocumentTest extends \PHPUnit_Framework_TestCase
 {
     private $xml;
 
-    public function setUp()
-    {
+    public function setUp(){
         parent::setUp();
 
         $xml = new \DOMDocument();
-        $xml->loadXML(file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'document.xml'));
+        $xml->loadXML( file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'document.xml'));
         $docInfo = $xml->getElementsByTagName('DocumentGetInfoResult')->item(0);
 
         $this->xml = $docInfo->textContent;
+
     }
 
-    public function tearDown()
-    {
+    public function tearDown(){
         parent::tearDown();
 
         $this->xml = null;
     }
 
     /**
-     * Test 1 : DocumentEntity->getName() return document name.
+     * Test 1 : DocumentEntity->getName() return document name
      */
     public function testGetNameShouldReturnStringDocumentName()
     {
@@ -42,7 +41,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 2 : DocumentEntity->getId() returns document id.
+     * Test 2 : DocumentEntity->getId() returns document id
      */
     public function testGetIdShouldReturnStringDocumentId()
     {
@@ -52,7 +51,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 3 : DocumentEntity->get() returns custom attribute value.
+     * Test 3 : DocumentEntity->get() returns custom attribute value
      */
     public function testGeneralGetShouldReturnCustomAttribute()
     {
@@ -63,7 +62,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 4 : DocumentEntity->get() - with invalid xpath expression.
+     * Test 4 : DocumentEntity->get() - with invalid xpath expression
      *
      * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException
      */

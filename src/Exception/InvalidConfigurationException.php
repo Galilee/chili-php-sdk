@@ -3,7 +3,9 @@
 namespace Galilee\PPM\SDK\Chili\Exception;
 
 /**
- * Class InvalidConfigurationException.
+ * Class InvalidConfigurationException
+ *
+ * @package Galilee\PPM\SDK\Chili\Exception
  */
 class InvalidConfigurationException extends \Exception
 {

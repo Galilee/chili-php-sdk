@@ -1,5 +1,4 @@
 <?php
-
 require 'initAutoloader.php';
 
 $yaml = file_get_contents('data'.DIRECTORY_SEPARATOR.'simple.yml');

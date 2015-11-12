@@ -3,7 +3,9 @@
 namespace Galilee\PPM\SDK\Chili\Exception;
 
 /**
- * Class ChiliSoapCallException.
+ * Class ChiliSoapCallException
+ *
+ * @package Galilee\PPM\SDK\Chili\Exception
  */
 class ChiliSoapCallException extends  \Exception
 {

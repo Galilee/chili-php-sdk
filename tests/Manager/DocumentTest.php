@@ -21,29 +21,27 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
     private $apiKey = '111111111111111';
 
-    public function setUp()
-    {
+    public function setUp(){
         parent::setUp();
 
         $confType = 'php_array';
         $configArr = [
-            'login' => 'login',
-            'password' => '1234',
-            'wsdlUrl' => 'http://test.wsdlurl.fr/testService?wsdl',
+            'login'       => 'login',
+            'password'    => '1234',
+            'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
-            'privateUrl' => 'http://private.test.fr',
-            'publicUrl' => 'http://public.test.fr',
+            'privateUrl'  => 'http://private.test.fr',
+            'publicUrl'   => 'http://public.test.fr',
         ];
 
         $configService = new ConfigService($confType, $configArr);
 
         $this->config = $configService->getConfig();
-        $mockDirectoryPath = __DIR__.DIRECTORY_SEPARATOR.'data';
+        $mockDirectoryPath = __DIR__ . DIRECTORY_SEPARATOR . 'data';
         $this->soapCallMock = new SoapCall($this->config, $mockDirectoryPath, $this->apiKey);
     }
 
-    public function tearDown()
-    {
+    public function tearDown(){
         parent::tearDown();
 
         $this->soapCallMock = null;
@@ -51,7 +49,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 1 : DocumentManager->getDocument(...) returns Document entity.
+     * Test 1 : DocumentManager->getDocument(...) returns Document entity
      */
     public function testGetDocumentInfoShouldReturnDocumentEntity()
     {
@@ -63,6 +61,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 
         $result = $manager->getDocument('3728e7ef-adcb-44a3-83f7-d2949edd9cbe');
 
+
         $this->assertInstanceOf('Galilee\\PPM\\SDK\\Chili\\Entity\\Document', $result);
         $this->assertEquals($result->getId(), '3728e7ef-adcb-44a3-83f7-d2949edd9cbe');
         $this->assertEquals($result->getName(), 'snippetHotel');
@@ -71,7 +70,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 2 : DocumentManager->getPreview(...) returns l'url du preview.
+     * Test 2 : DocumentManager->getPreview(...) returns l'url du preview
      *
      * @depends testGetDocumentInfoShouldReturnDocumentEntity
      */
@@ -90,7 +89,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 3 : DocumentManager->duplicate(...) returns duplicated Document entity.
+     * Test 3 : DocumentManager->duplicate(...) returns duplicated Document entity
      *
      * @depends testGetDocumentInfoShouldReturnDocumentEntity
      */
@@ -111,7 +110,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 4 : DocumentManager->buildPdf(...) returns task entity.
+     * Test 4 : DocumentManager->buildPdf(...) returns task entity
      *
      * @param $document
      *
@@ -138,7 +137,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 5 : DocumentManager->deleteDocument(...) returns true.
+     * Test 5 : DocumentManager->deleteDocument(...) returns true
      *
      * @param $document
      *
@@ -157,8 +156,9 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+
     /**
-     * Test 6 : DocumentManager->getDocument(...)  throws exception.
+     * Test 6 : DocumentManager->getDocument(...)  throws exception
      *
      * @expectedException \Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException
      */

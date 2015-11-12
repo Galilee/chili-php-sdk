@@ -12,12 +12,12 @@ class Document extends AbstractEntity
     protected $name = null;
 
     protected $availablePropertiesMap = [
-        AbstractEntity::NAME => '/documentInfo/@name',
-        AbstractEntity::ID => '/documentInfo/@id',
+        AbstractEntity::NAME =>  '/documentInfo/@name',
+        AbstractEntity::ID   =>  '/documentInfo/@id',
     ];
 
     /**
-     * Get Document name.
+     * Get Document name
      *
      * @return string
      *

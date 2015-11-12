@@ -22,14 +22,14 @@ class Task extends AbstractManager
     public function getStatus(TaskEntity $task)
     {
         $xmlResponse = $this->soapCall->TaskGetStatus([
-            'taskID' => $task->getId(),
+            'taskID' => $task->getId()
         ]);
         $foundTask = new TaskEntity($xmlResponse);
 
         return $foundTask->getStatus();
     }
 
-    /*
+    /**
      * @param TaskEntity $task
      * @param int        $timeout
      */

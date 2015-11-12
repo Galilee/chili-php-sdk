@@ -11,12 +11,12 @@ use Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException;
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
- * Class Editor.
+ * Class Editor
  */
 class Editor extends AbstractManager
 {
     /**
-     * Get a Chili workspace by ID.
+     * Get a Chili workspace by ID
      *
      * @param string $id
      *
@@ -32,7 +32,7 @@ class Editor extends AbstractManager
     }
 
     /**
-     * Get a Chili ViewPreference by ID.
+     * Get a Chili ViewPreference by ID
      *
      * @param string $id
      *
@@ -45,10 +45,11 @@ class Editor extends AbstractManager
         $result = $this->searchResourceById($id, ViewPreference::RESOURCE_NAME);
 
         return new ViewPreference($result);
+
     }
 
     /**
-     * Get a Chili DocumentConstraint by ID.
+     * Get a Chili DocumentConstraint by ID
      *
      * @param string $id
      *
@@ -56,19 +57,19 @@ class Editor extends AbstractManager
      *
      * @throws EntityNotFoundException
      */
-    public function getDocumentConstraint($id)
-    {
+    public function getDocumentConstraint($id){
+
         $result = $this->searchResourceById($id, DocumentConstraint::RESOURCE_NAME);
 
         return new DocumentConstraint($result);
     }
 
     /**
-     * Get the relative URL of a Chili Editor.
+     * Get the relative URL of a Chili Editor
      *
-     * @param DocumentEntity     $document
-     * @param Workspace          $workspace
-     * @param ViewPreference     $viewPreference
+     * @param DocumentEntity $document
+     * @param Workspace $workspace
+     * @param ViewPreference $viewPreference
      * @param DocumentConstraint $documentConstraint
      *
      * @return string|null
@@ -78,11 +79,11 @@ class Editor extends AbstractManager
     public function getEditor(DocumentEntity $document, Workspace $workspace, ViewPreference $viewPreference, DocumentConstraint $constraint /*, $language*/)
     {
         $xmlResponse = $this->soapCall->DocumentGetEditorURL([
-            'itemID' => $document->getId(),
-            'workSpaceID' => $workspace->getId(),
-            'viewPrefsID' => $viewPreference->getId(),
-            'constraintsID' => $constraint->getId(),
-            'viewerOnly' => false,
+            'itemID'           => $document->getId(),
+            'workSpaceID'      => $workspace->getId(),
+            'viewPrefsID'      => $viewPreference->getId(),
+            'constraintsID'    => $constraint->getId(),
+            'viewerOnly'       => false,
             'forAnonymousUser' => false,
         ]);
 
@@ -91,6 +92,6 @@ class Editor extends AbstractManager
             return $nodeList->item(0)->nodeValue;
         }
 
-        return;
+        return null;
     }
 }

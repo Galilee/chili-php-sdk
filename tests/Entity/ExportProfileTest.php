@@ -1,38 +1,37 @@
 <?php
 
 namespace Galilee\PPM\Tests\SDK\Chili\Entity;
-
 use Galilee\PPM\SDK\Chili\Entity\ExportProfile;
 
 /**
- * Class ExportProfileTest.
+ * Class ExportProfileTest
  *
+ * @package Galilee\PPM\Tests\SDK\Chili\Entity
  * @backupGlobals disabled
  */
 class ExportProfileTest extends \PHPUnit_Framework_TestCase
 {
     private $xml;
 
-    public function setUp()
-    {
+    public function setUp(){
         parent::setUp();
 
         $xml = new \DOMDocument();
-        $xml->loadXML(file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'exportProfile.xml'));
+        $xml->loadXML( file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'exportProfile.xml'));
         $exportProfileInfo = $xml->getElementsByTagName('ResourceItemGetDefinitionXMLResult')->item(0);
 
         $this->xml = $exportProfileInfo->textContent;
+
     }
 
-    public function tearDown()
-    {
+    public function tearDown(){
         parent::tearDown();
 
         $this->xml = null;
     }
 
     /**
-     * Test 1 : ExportProfileEntity->getName() returns ExportProfile name.
+     * Test 1 : ExportProfileEntity->getName() returns ExportProfile name
      */
     public function testGetNameShouldReturnStringExportProfileName()
     {
@@ -42,7 +41,7 @@ class ExportProfileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 2 : ExportProfileEntity->getId() returns ExportProfile ID.
+     * Test 2 : ExportProfileEntity->getId() returns ExportProfile ID
      */
     public function testGetIdShouldReturnStringExportProfileId()
     {
@@ -52,7 +51,7 @@ class ExportProfileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test 3 : ExportProfileEntity->get(...) returns custom attribute value.
+     * Test 3 : ExportProfileEntity->get(...) returns custom attribute value
      */
     public function testGeneralGetShouldReturnCustomAttribute()
     {

@@ -5,6 +5,7 @@ namespace Galilee\PPM\SDK\Chili\Manager;
 use Galilee\PPM\SDK\Chili\Config\Config;
 use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
 use Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException;
+use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**
@@ -20,9 +21,10 @@ abstract class AbstractManager
     /**
      * Initialize the manager configuration and the soap client.
      *
-     * @param Config $config       - see ConfigService->getConfig() to create this parameter
+     * @param Config $config - see ConfigService->getConfig() to create this parameter
      * @param string $apiKey
-     * @param bool   $initSoapCall
+     * @param bool $initSoapCall
+     *
      */
     public function __construct(Config $config, $apiKey = null, $initSoapCall = true)
     {
@@ -36,7 +38,7 @@ abstract class AbstractManager
     }
 
     /**
-     * Set the soap service manager.
+     * Set the soap service manager
      *
      * @param InterfaceSoapCall $soapCall
      */
@@ -48,9 +50,10 @@ abstract class AbstractManager
     }
 
     /**
-     * Get soap call.
+     * Get soap call
      *
      * @return SoapCall|null
+     *
      */
     public function getSoapCall()
     {
@@ -58,7 +61,7 @@ abstract class AbstractManager
     }
 
     /**
-     * Search resource by id (and type).
+     * Search resource by id (and type)
      *
      * @param string $id
      * @param string $resourceName
@@ -71,7 +74,7 @@ abstract class AbstractManager
     {
         $xmlResponse = $this->soapCall->ResourceSearchByIDs([
             'resourceName' => $resourceName,
-            'IDs' => $id,
+            'IDs'          => $id
         ]);
         $result = Parser::get($xmlResponse, '//searchresults/item');
         if ($result->length == 1) {
@@ -80,11 +83,11 @@ abstract class AbstractManager
             return $item->ownerDocument->saveXML($item);
         }
 
-        throw new EntityNotFoundException('Resource not found for resourceName='.$resourceName.' and id='.$id);
-    }
+        throw new EntityNotFoundException('Resource not found for resourceName=' . $resourceName . ' and id=' . $id);
+}
 
     /**
-     * Delete a Chili Resource Item by id (and type).
+     * Delete a Chili Resource Item by id (and type)
      *
      * @param $id
      * @param $resourceName
@@ -97,7 +100,7 @@ abstract class AbstractManager
     {
         $xmlResponse = $this->soapCall->ResourceItemDelete([
             'resourceName' => $resourceName,
-            'itemID' => $id,
+            'itemID'       => $id
         ]);
 
         $result = Parser::get($xmlResponse, '/ok');

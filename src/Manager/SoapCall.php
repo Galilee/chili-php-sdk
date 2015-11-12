@@ -32,6 +32,7 @@ class SoapCall implements InterfaceSoapCall
         $this->soapClient = new \SoapClient($this->config->getWsdlUrl(), ['cache_wsdl' => WSDL_CACHE_DISK]);
     }
 
+
     /**
      * Get the chili apiKey, parameter needed for the webservice calls.
      *
@@ -43,8 +44,8 @@ class SoapCall implements InterfaceSoapCall
             try {
                 $soapXmlResponse = $this->soapClient->GenerateApiKey([
                     'environmentNameOrURL' => $this->config->getEnvironment(),
-                    'userName' => $this->config->getLogin(),
-                    'password' => $this->config->getPassword(),
+                    'userName'             => $this->config->getLogin(),
+                    'password'             => $this->config->getPassword(),
                 ]);
 
                 $queryResult = Parser::get($soapXmlResponse->GenerateApiKeyResult, '/apiKey[1]/@key');
@@ -56,6 +57,8 @@ class SoapCall implements InterfaceSoapCall
 
         return $this->apiKey;
     }
+
+
 
     /**
      * Perform a Chili webservice call.
@@ -69,7 +72,7 @@ class SoapCall implements InterfaceSoapCall
      */
     public function __call($method, $params = array())
     {
-        if (!isset($params['apiKey'])) {
+        if(!isset($params['apiKey'])){
             $apiKey = $this->getApiKey();
 
             $soapParams = array('apiKey' => $apiKey);
@@ -82,8 +85,7 @@ class SoapCall implements InterfaceSoapCall
         // call chili API
         try {
             $soapXmlResponse = $this->soapClient->{$method}($params);
-
-            return $soapXmlResponse->{$method.'Result'};
+            return $soapXmlResponse->{$method . 'Result'};
         } catch (\Exception $e) {
             throw new ChiliSoapCallException('Error on webservice call "'.$method.'" with message: '.$e->getMessage(), $e->getCode());
         }
