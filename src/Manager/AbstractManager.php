@@ -72,10 +72,10 @@ abstract class AbstractManager
      */
     public function searchResourceById($id, $resourceName)
     {
-        $xmlResponse = $this->soapCall->ResourceSearchByIDs([
+        $xmlResponse = $this->soapCall->ResourceSearchByIDs(array(
             'resourceName' => $resourceName,
             'IDs'          => $id
-        ]);
+        ));
         $result = Parser::get($xmlResponse, '//searchresults/item');
         if ($result->length == 1) {
             $item = $result->item(0);
@@ -98,10 +98,10 @@ abstract class AbstractManager
      */
     protected function deleteResourceById($id, $resourceName)
     {
-        $xmlResponse = $this->soapCall->ResourceItemDelete([
+        $xmlResponse = $this->soapCall->ResourceItemDelete(array(
             'resourceName' => $resourceName,
             'itemID'       => $id
-        ]);
+        ));
 
         $result = Parser::get($xmlResponse, '/ok');
 

@@ -17,11 +17,11 @@ class Task extends AbstractEntity
     const STATUS_ERROR_MESSAGE = 'errorMessage';
     const STATUS_ERROR_STACK = 'errorStack';
 
-    protected $status = [];
+    protected $status = array();
 
-    protected $availablePropertiesMap = [
+    protected $availablePropertiesMap = array(
         AbstractEntity::ID => '/task/@id',
-    ];
+    );
 
     /**
      * Get task status information

@@ -77,14 +77,14 @@ class Editor extends AbstractManager
      */
     public function getEditor(DocumentEntity $document, Workspace $workspace, ViewPreference $viewPreference, DocumentConstraint $constraint /*, $language*/)
     {
-        $xmlResponse = $this->soapCall->DocumentGetEditorURL([
+        $xmlResponse = $this->soapCall->DocumentGetEditorURL(array(
             'itemID'           => $document->getId(),
             'workSpaceID'      => $workspace->getId(),
             'viewPrefsID'      => $viewPreference->getId(),
             'constraintsID'    => $constraint->getId(),
             'viewerOnly'       => false,
             'forAnonymousUser' => false,
-        ]);
+        ));
 
         $nodeList = Parser::get($xmlResponse, '//urlInfo/@relativeURL');
         if ($nodeList->length == 1) {

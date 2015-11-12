@@ -17,21 +17,21 @@ class ConfigService
     const TYPE_YAML = 'yaml';
     const TYPE_PHP_ARRAY = 'php_array';
 
-    protected $allowedTypes = [
+    protected $allowedTypes = array(
         self::TYPE_XML,
         self::TYPE_YAML,
         self::TYPE_JSON,
         self::TYPE_PHP_ARRAY
-    ];
+    );
 
-    protected $allowedConfigProperties = [
+    protected $allowedConfigProperties = array(
         'login',
         'password',
         'wsdlUrl',
         'environment',
         'privateUrl',
         'publicUrl',
-    ];
+    );
 
     /**
      * init configuration object
@@ -113,13 +113,13 @@ class ConfigService
 
         if ($resultObject === false) {
             $errors = libxml_get_errors();
-            $messages = [];
+            $messages = array();
             foreach ($errors as $error) {
                 $messages[] = $error->message;
             }
             throw new InvalidXmlException('Invalid XML : ' . implode("\t", $messages));
         }
-        $result = [];
+        $result = array();
         if ($resultObject instanceof \SimpleXMLElement) {
             foreach ($resultObject as $key => $value) {
                 $result[$key] = (string) $value;
@@ -197,7 +197,7 @@ class ConfigService
             throw new InvalidConfigurationException('Unknown configuration format.');
         }
 
-        $missingProp = [];
+        $missingProp = array();
         foreach ($this->allowedConfigProperties as $property) {
             if (!isset($config[$property])) {
                 $missingProp[] = $property;

@@ -18,14 +18,14 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
     public function testPhpArrayConfigShouldReturnConfigObject()
     {
         $type = 'php_array';
-        $configArr = [
+        $configArr = array(
             'login'       => 'login',
             'password'    => '1234',
             'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
             'privateUrl'  => 'http://private.test.fr',
             'publicUrl'   => 'http://public.test.fr',
-        ];
+        );
 
         $configService = new ConfigService($type, $configArr);
         $config = $configService->getConfig();
@@ -45,13 +45,13 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
     public function testPhpArrayConfigWithMissingParameterShouldThrowException()
     {
         $type = 'php_array';
-        $configArr = [
+        $configArr = array(
             'password'    => '1234',
             'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
             'privateUrl'  => 'http://private.test.fr',
             'publicUrl'   => 'http://public.test.fr',
-        ];
+        );
 
         $configService = new ConfigService($type, $configArr);
         $config = $configService->getConfig();

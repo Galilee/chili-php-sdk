@@ -29,7 +29,7 @@ class SoapCall implements InterfaceSoapCall
         $this->apiKey = $apiKey;
 
         // init soap client for chili webservice calls
-        $this->soapClient = new \SoapClient($this->config->getWsdlUrl(), ['cache_wsdl' => WSDL_CACHE_DISK]);
+        $this->soapClient = new \SoapClient($this->config->getWsdlUrl(), array('cache_wsdl' => WSDL_CACHE_DISK));
     }
 
 
@@ -42,11 +42,11 @@ class SoapCall implements InterfaceSoapCall
     {
         if ($this->apiKey === null) {
             try {
-                $soapXmlResponse = $this->soapClient->GenerateApiKey([
+                $soapXmlResponse = $this->soapClient->GenerateApiKey(array(
                     'environmentNameOrURL' => $this->config->getEnvironment(),
                     'userName'             => $this->config->getLogin(),
                     'password'             => $this->config->getPassword(),
-                ]);
+                ));
 
                 $queryResult = Parser::get($soapXmlResponse->GenerateApiKeyResult, '/apiKey[1]/@key');
                 $this->apiKey = $queryResult->item(0)->nodeValue;

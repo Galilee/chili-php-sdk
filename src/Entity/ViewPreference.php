@@ -9,8 +9,8 @@ class ViewPreference extends AbstractEntity
 {
     const RESOURCE_NAME = 'ViewPreferences';
 
-    protected $availablePropertiesMap = [
+    protected $availablePropertiesMap = array(
         AbstractEntity::NAME => '/item/@name',
         AbstractEntity::ID   => '/item/@id',
-    ];
+    );
 }

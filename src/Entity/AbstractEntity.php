@@ -19,7 +19,7 @@ abstract class AbstractEntity implements InterfaceEntity
     protected $id = null;
 
     /** @var array $availablePropertiesMap */
-    protected $availablePropertiesMap = [];
+    protected $availablePropertiesMap = array();
 
     /**
      * Set the entity xml definition

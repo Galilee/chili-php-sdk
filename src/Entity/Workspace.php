@@ -9,8 +9,8 @@ class Workspace extends AbstractEntity
 {
     const RESOURCE_NAME = 'WorkSpaces';
 
-    protected $availablePropertiesMap = [
+    protected $availablePropertiesMap = array(
         AbstractEntity::NAME => '/item/@name',
         AbstractEntity::ID   => '/item/@id',
-    ];
+    );
 }

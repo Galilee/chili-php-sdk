@@ -11,10 +11,10 @@ class ExportProfile extends AbstractEntity
 
     protected $name = null;
 
-    protected $availablePropertiesMap = [
+    protected $availablePropertiesMap = array(
         AbstractEntity::ID    => '/item/@id',
         AbstractEntity::NAME  => '/item/@name',
-    ];
+    );
 
     /**
      * Get ExportProfile name

@@ -28,14 +28,14 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $confType = 'php_array';
-        $configArr = [
+        $configArr = array(
             'login'       => 'login',
             'password'    => '1234',
             'wsdlUrl'     => 'http://test.wsdlurl.fr/testService?wsdl',
             'environment' => 'test',
             'privateUrl'  => 'http://private.test.fr',
             'publicUrl'   => 'http://public.test.fr',
-        ];
+        );
 
         $configService = new ConfigService($confType, $configArr);
         $mockDirectoryPath = __DIR__ . DIRECTORY_SEPARATOR . 'data';

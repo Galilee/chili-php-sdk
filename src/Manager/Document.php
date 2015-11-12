@@ -30,10 +30,10 @@ class Document extends AbstractManager
         //check the given document id
         $this->searchResourceById($id, DocumentEntity::RESOURCE_NAME);
 
-        $xmlResponse = $this->soapCall->DocumentGetInfo([
+        $xmlResponse = $this->soapCall->DocumentGetInfo(array(
             'itemID'   => $id,
             'extended' => 0,
-        ]);
+        ));
 
         return new DocumentEntity($xmlResponse, $lazy);
     }
@@ -51,12 +51,12 @@ class Document extends AbstractManager
      */
     public function getPreview(DocumentEntity $document, $type, $pageNum)
     {
-        $xmlResponse = $this->soapCall->ResourceItemGetURL([
+        $xmlResponse = $this->soapCall->ResourceItemGetURL(array(
             'resourceName' => DocumentEntity::RESOURCE_NAME,
             'itemID'       => $document->getId(),
             'type'         => $type,
             'pageNum'      => $pageNum,
-        ]);
+        ));
 
         $nodeList = Parser::get($xmlResponse, '/urlInfo[1]/@url');
         if ($nodeList->length == 1) {
@@ -77,12 +77,12 @@ class Document extends AbstractManager
      */
     public function duplicate(DocumentEntity $document, $newName = 'copy', $folderPath = '')
     {
-        $xmlResponse = $this->soapCall->ResourceItemCopy([
+        $xmlResponse = $this->soapCall->ResourceItemCopy(array(
             'resourceName' => DocumentEntity::RESOURCE_NAME,
             'itemID'       => $document->getId(),
             'newName'      => $newName,
             'folderPath'   => $folderPath,
-        ]);
+        ));
         $nodeList = Parser::get($xmlResponse, '/item[1]/@id');
         if ($nodeList->length == 1) {
             $duplicatedDocId = $nodeList->item(0)->nodeValue;
@@ -106,11 +106,11 @@ class Document extends AbstractManager
      */
     public function buildPdf(DocumentEntity $document, ExportProfile $exportProfile, $taskPriority = 7)
     {
-        $xmlResponse = $this->soapCall->DocumentCreatePDF([
+        $xmlResponse = $this->soapCall->DocumentCreatePDF(array(
             'itemID'       => $document->getId(),
             'settingsXml'  => $exportProfile->getXmlDef(),
             'taskPriority' => $taskPriority,
-        ]);
+        ));
 
         return new Task($xmlResponse);
     }
@@ -130,10 +130,10 @@ class Document extends AbstractManager
         //check the given export profile id
         $this->searchResourceById($id, ExportProfile::RESOURCE_NAME);
 
-        $xmlResponse = $this->soapCall->ResourceItemGetDefinitionXML([
+        $xmlResponse = $this->soapCall->ResourceItemGetDefinitionXML(array(
             'resourceName' => ExportProfile::RESOURCE_NAME,
             'itemID'       => $id,
-        ]);
+        ));
 
         return new ExportProfile($xmlResponse);
     }

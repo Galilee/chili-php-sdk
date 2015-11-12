@@ -11,7 +11,7 @@ class DocumentConstraint extends AbstractEntity
 {
     const RESOURCE_NAME = 'DocumentConstraints';
 
-    protected $availablePropertiesMap = [
+    protected $availablePropertiesMap = array(
         AbstractEntity::ID => '/item/@id',
-    ];
+    );
 }
