@@ -12,8 +12,9 @@ use Galilee\PPM\SDK\Chili\Helper\Parser;
  */
 abstract class AbstractManager
 {
+    /** @var Config|null  */
     protected $config = null;
-
+    /** @var SoapCall|null  */
     protected $soapCall = null;
 
     /**
