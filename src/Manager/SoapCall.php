@@ -72,7 +72,7 @@ class SoapCall implements InterfaceSoapCall
      */
     public function __call($method, $params = array())
     {
-        if(!isset($params['apiKey'])){
+        if (!isset($params['apiKey'])) {
             $apiKey = $this->getApiKey();
 
             $soapParams = array('apiKey' => $apiKey);

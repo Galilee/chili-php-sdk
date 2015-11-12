@@ -42,10 +42,11 @@ abstract class AbstractEntity implements InterfaceEntity
      *
      * @throws InvalidXpathExpressionException
      */
-    public function getId(){
+    public function getId()
+    {
         if (!$this->id) {
             $nodeList = $this->get(self::ID);
-            if($nodeList->length == 1){
+            if ($nodeList->length == 1) {
                 $this->id = $nodeList->item(0)->nodeValue;
             }
         }

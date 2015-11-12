@@ -13,5 +13,4 @@ class Workspace extends AbstractEntity
         AbstractEntity::NAME => '/item/@name',
         AbstractEntity::ID   => '/item/@id',
     ];
-
 }

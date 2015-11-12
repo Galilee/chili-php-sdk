@@ -2,9 +2,8 @@
 
 namespace Galilee\PPM\SDK\Chili\Config;
 
-
-class Config implements InterfaceConfig{
-
+class Config implements InterfaceConfig
+{
     protected $login;
     protected $password;
     protected $wsdlUrl;
@@ -25,7 +24,7 @@ class Config implements InterfaceConfig{
      */
     public function getPassword()
     {
-         return $this->password;
+        return $this->password;
     }
 
     /**

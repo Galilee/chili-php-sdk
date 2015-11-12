@@ -2,15 +2,14 @@
 
 namespace Galilee\PPM\SDK\Chili\Config;
 
-
 use Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidJsonException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidXmlException;
 use Galilee\PPM\SDK\Chili\Exception\InvalidYamlException;
 use Symfony\Component\Yaml\Yaml;
 
-class ConfigService {
-
+class ConfigService
+{
     private $config = null;
 
     const TYPE_XML = 'xml';
@@ -50,7 +49,8 @@ class ConfigService {
     /**
      * @return Config|null
      */
-    public function getConfig(){
+    public function getConfig()
+    {
         return $this->config;
     }
 
@@ -97,7 +97,6 @@ class ConfigService {
         }
 
         return $config;
-
     }
 
     /**

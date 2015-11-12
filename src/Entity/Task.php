@@ -1,6 +1,7 @@
 <?php
 
 namespace Galilee\PPM\SDK\Chili\Entity;
+
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
 /**

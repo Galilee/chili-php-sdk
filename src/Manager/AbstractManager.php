@@ -84,7 +84,7 @@ abstract class AbstractManager
         }
 
         throw new EntityNotFoundException('Resource not found for resourceName=' . $resourceName . ' and id=' . $id);
-}
+    }
 
     /**
      * Delete a Chili Resource Item by id (and type)

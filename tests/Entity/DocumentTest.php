@@ -1,6 +1,7 @@
 <?php
 
 namespace Galilee\PPM\Tests\SDK\Chili\Entity;
+
 use Galilee\PPM\SDK\Chili\Entity\Document;
 
 /**
@@ -13,18 +14,19 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
 {
     private $xml;
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
 
         $xml = new \DOMDocument();
-        $xml->loadXML( file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'document.xml'));
+        $xml->loadXML(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'document.xml'));
         $docInfo = $xml->getElementsByTagName('DocumentGetInfoResult')->item(0);
 
         $this->xml = $docInfo->textContent;
-
     }
 
-    public function tearDown(){
+    public function tearDown()
+    {
         parent::tearDown();
 
         $this->xml = null;

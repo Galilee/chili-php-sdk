@@ -10,8 +10,8 @@ use Galilee\PPM\SDK\Chili\Manager\InterfaceSoapCall;
  *
  * @package Galilee\PPM\Tests\SDK\Chili\Mock
  */
-class SoapCall implements InterfaceSoapCall{
-
+class SoapCall implements InterfaceSoapCall
+{
     protected $apiKey;
 
     protected $config;
@@ -30,7 +30,6 @@ class SoapCall implements InterfaceSoapCall{
     {
         $this->apiKey = $apiKey;
         $this->mockDirectoryPath = $mockDirectoryPath;
-
     }
 
     public function getApiKey()

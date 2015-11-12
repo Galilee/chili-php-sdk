@@ -45,7 +45,6 @@ class Editor extends AbstractManager
         $result = $this->searchResourceById($id, ViewPreference::RESOURCE_NAME);
 
         return new ViewPreference($result);
-
     }
 
     /**
@@ -57,8 +56,8 @@ class Editor extends AbstractManager
      *
      * @throws EntityNotFoundException
      */
-    public function getDocumentConstraint($id){
-
+    public function getDocumentConstraint($id)
+    {
         $result = $this->searchResourceById($id, DocumentConstraint::RESOURCE_NAME);
 
         return new DocumentConstraint($result);

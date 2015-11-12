@@ -1,6 +1,7 @@
 <?php
 
 namespace Galilee\PPM\Tests\SDK\Chili\Entity;
+
 use Galilee\PPM\SDK\Chili\Entity\ViewPreference;
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
@@ -14,11 +15,12 @@ class ViewPreferenceTest extends \PHPUnit_Framework_TestCase
 {
     private $xml;
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
 
         $xml = new \DOMDocument();
-        $xml->loadXML( file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'viewPreference.xml'));
+        $xml->loadXML(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'viewPreference.xml'));
         $info = $xml->getElementsByTagName('ResourceSearchByIDsResult')->item(0)->textContent;
 
         $result = Parser::get($info, '//searchresults/item');
@@ -26,7 +28,8 @@ class ViewPreferenceTest extends \PHPUnit_Framework_TestCase
         $this->xml = $item->ownerDocument->saveXML($item);
     }
 
-    public function tearDown(){
+    public function tearDown()
+    {
         parent::tearDown();
 
         $this->xml = null;

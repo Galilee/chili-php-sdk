@@ -23,7 +23,8 @@ class EditorTest extends \PHPUnit_Framework_TestCase
 
     private $apiKey = '111111111111111';
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
 
         $confType = 'php_array';
@@ -43,7 +44,8 @@ class EditorTest extends \PHPUnit_Framework_TestCase
         $this->soapCallMock = new SoapCall($this->config, $mockDirectoryPath, $this->apiKey);
     }
 
-    public function tearDown(){
+    public function tearDown()
+    {
         parent::tearDown();
 
         $this->soapCallMock = null;

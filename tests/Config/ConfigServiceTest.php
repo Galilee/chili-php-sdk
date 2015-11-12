@@ -3,6 +3,7 @@
 namespace Galilee\PPM\Tests\SDK\Chili\Config;
 
 use Galilee\PPM\SDK\Chili\Config\ConfigService;
+
 /**
  * Class ConfigServiceTest.
  *
@@ -10,7 +11,6 @@ use Galilee\PPM\SDK\Chili\Config\ConfigService;
  */
 class ConfigServiceTest extends \PHPUnit_Framework_TestCase
 {
-
     /*public function setUp(){
         parent::setUp();
     }*/
@@ -59,7 +59,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testYamlConfigShouldReturnConfigObject()
     {
-        $yamlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.yml');
+        $yamlConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.yml');
 
         $configService = new ConfigService('yaml', $yamlConf);
         $config = $configService->getConfig();
@@ -70,7 +70,6 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($config->getPassword(), 'test@pwd');
         $this->assertEquals($config->getPrivateUrl(), 'http://private.test.fr');
         $this->assertEquals($config->getPublicUrl(), 'http://public.test.fr');
-
     }
 
     /**
@@ -78,7 +77,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testYamlInvalidConfigShouldThrowException()
     {
-        $yamlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.yml');
+        $yamlConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.yml');
 
         $configService = new ConfigService('yaml', $yamlConf);
         $config = $configService->getConfig();
@@ -87,7 +86,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testXmlConfigShouldReturnConfigObject()
     {
-        $xmlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.xml');
+        $xmlConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.xml');
 
         $configService = new ConfigService('xml', $xmlConf);
         $config = $configService->getConfig();
@@ -105,7 +104,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testIvalidXmlConfigShouldThrowInvalidXmlException()
     {
-        $xmlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.xml');
+        $xmlConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.xml');
 
         $configService = new ConfigService('xml', $xmlConf);
         $config = $configService->getConfig();
@@ -116,7 +115,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testIvalidXmlConfigShouldThrowInvalidConfigurationException()
     {
-        $xmlConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid_property.xml');
+        $xmlConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid_property.xml');
 
         $configService = new ConfigService('xml', $xmlConf);
         $config = $configService->getConfig();
@@ -124,7 +123,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testJsonConfigShouldReturnConfigObject()
     {
-        $jsonConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.json');
+        $jsonConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple.json');
 
         $configService = new ConfigService('json', $jsonConf);
         $config = $configService->getConfig();
@@ -142,7 +141,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testIvalidJsonConfigShouldThrowInvalidJsonException()
     {
-        $jsonConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.json');
+        $jsonConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid.json');
 
         $configService = new ConfigService('json', $jsonConf);
         $config = $configService->getConfig();
@@ -153,7 +152,7 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testIvalidJsonConfigShouldThrowInvalidConfigurationException()
     {
-        $jsonConf = file_get_contents( __DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid_property.json');
+        $jsonConf = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'data'.DIRECTORY_SEPARATOR.'simple_invalid_property.json');
 
         $configService = new ConfigService('json', $jsonConf);
         $config = $configService->getConfig();
@@ -162,7 +161,8 @@ class ConfigServiceTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Galilee\PPM\SDK\Chili\Exception\InvalidConfigurationException
      */
-    public function testInvalidTypeConfigurationShouldThrowException(){
+    public function testInvalidTypeConfigurationShouldThrowException()
+    {
         $conf = array('test' => 'test');
         $confType = 'dummy';
 
