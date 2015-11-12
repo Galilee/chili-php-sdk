@@ -40,8 +40,10 @@ class Task extends AbstractEntity
                 $succeeded = $queryResult->item(0)->attributes->getNamedItem('succeeded')->nodeValue;
                 $this->status[self::STATUS_FINISHED] = (strtolower($finished) === 'true');
                 $this->status[self::STATUS_SUCCEEDED] = (strtolower($succeeded) === 'true');
-                $this->status[self::STATUS_ERROR_MESSAGE] = $queryResult->item(0)->attributes->getNamedItem('errorMessage')->nodeValue;
-                $this->status[self::STATUS_ERROR_STACK] = $queryResult->item(0)->attributes->getNamedItem('errorStack')->nodeValue;
+                $this->status[self::STATUS_ERROR_MESSAGE] =
+                    $queryResult->item(0)->attributes->getNamedItem('errorMessage')->nodeValue;
+                $this->status[self::STATUS_ERROR_STACK] =
+                    $queryResult->item(0)->attributes->getNamedItem('errorStack')->nodeValue;
 
                 if ($this->status[self::STATUS_FINISHED] && $this->status[self::STATUS_SUCCEEDED]) {
                     $result = $queryResult->item(0)->attributes->getNamedItem('result')->nodeValue;
@@ -51,9 +53,12 @@ class Task extends AbstractEntity
                         $queryResult = Parser::get($result, '//result');
 
                         if ($queryResult->length == 1) {
-                            $this->status[self::STATUS_PATH] = $queryResult->item(0)->attributes->getNamedItem('path')->nodeValue;
-                            $this->status[self::STATUS_URL] = $queryResult->item(0)->attributes->getNamedItem('url')->nodeValue;
-                            $this->status[self::STATUS_RELATIVE_URL] = $queryResult->item(0)->attributes->getNamedItem('relativeURL')->nodeValue;
+                            $this->status[self::STATUS_PATH] =
+                                $queryResult->item(0)->attributes->getNamedItem('path')->nodeValue;
+                            $this->status[self::STATUS_URL] =
+                                $queryResult->item(0)->attributes->getNamedItem('url')->nodeValue;
+                            $this->status[self::STATUS_RELATIVE_URL] =
+                                $queryResult->item(0)->attributes->getNamedItem('relativeURL')->nodeValue;
                         }
                     }
                 }
