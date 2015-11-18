@@ -1,6 +1,6 @@
 <?php
 
-namespace Galilee\PPM\Tests\SDK\Chili\Manager;
+namespace Galilee\PPM\Tests\SDK\Chili\Helper;
 
 use Galilee\PPM\SDK\Chili\Helper\Parser;
 
