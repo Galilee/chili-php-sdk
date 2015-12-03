@@ -12,6 +12,8 @@ use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
  */
 class Task extends AbstractManager
 {
+    const  DELAY_TASKGETSTATUS_CALL = 3;
+
     /**
      * Get the status information for the given task.
      *
@@ -32,16 +34,18 @@ class Task extends AbstractManager
     }
 
     /**
-     * Wait for maximum $timeout seconds while checking (every 3 seconds) if the task has been completed
+     * Wait for maximum $timeout seconds while checking if the task has been completed
      *
      * @param TaskEntity $task
      * @param int        $timeout - if null or zero then wait until the task is finished
+     * @param int        $delay - number of seconds to wait before calling the Chili webservice
+     *                          - if null then the value of self::DELAY_TASKGETSTATUS_CALL will be used by default
      *
      * @return bool
      *
      * @throws ChiliSoapCallException
      */
-    public function waitFor(TaskEntity $task, $timeout = null)
+    public function waitFor(TaskEntity $task, $timeout = null, $delay = null)
     {
         $timeLimit = $timeout ? time() + intval($timeout) : 0;
         $finished = false;
@@ -56,9 +60,11 @@ class Task extends AbstractManager
                 isset($statusInfo[TaskEntity::STATUS_FINISHED]) &&
                 $statusInfo[TaskEntity::STATUS_FINISHED] == true
             );
-            // wait for 3 seconds before re-call the Chili webservice
-            if (!$finished) {
-                sleep(3);
+            // wait for $delay seconds before re-call the Chili webservice
+            $delay = ($delay === null) ? self::DELAY_TASKGETSTATUS_CALL : intval($delay);
+
+            if (!$finished && $delay > 0) {
+                sleep($delay);
             }
         }
 
