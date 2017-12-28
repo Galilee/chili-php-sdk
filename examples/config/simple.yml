@@ -1,0 +1,5 @@
+username: form1
+password: form1
+wsdlUrl: http://chili-demo.galilee.fr/CHILI/main.asmx?wsdl
+environment: galilee
+proxyUrl: http://my-chili-app/chilieditor

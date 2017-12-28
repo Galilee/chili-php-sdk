@@ -8,6 +8,7 @@ use Galilee\PPM\SDK\Chili\Client\ResultXml;
 
 /**
  * @method bool isFinished()
+ * @method string getResultUrl()
  */
 class Task extends AbstractService
 {
@@ -29,6 +30,6 @@ class Task extends AbstractService
         );
         $result = $this->soapCall->taskGetStatus($params);
         $this->loadXML($result);
-        return $result;
+        return $this;
     }
 }

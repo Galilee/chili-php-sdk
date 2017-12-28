@@ -4,6 +4,6 @@
     <password>test@pwd</password>
     <environment>test</environment>
     <wsdlUrl>http://test.wsdlurl.fr/testService?wsdl</wsdlUrl>
-    <privateUrl>http://private.test.fr</privateUrl>
-    <publicUrl>http://public.test.fr</publicUrl>
+    <proxyUrl>http://my-chili-app/chilieditor</proxyUrl>
+
 </properties>

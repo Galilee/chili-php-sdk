@@ -1,6 +1,0 @@
-login: test
-password: test@pwd
-wsdlUrl: http://test.wsdlurl.fr/testService?wsdl
-environment: dev
-privateUrl: http://private.test.com
-publicUrl: http://public.test.com
