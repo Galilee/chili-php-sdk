@@ -10,7 +10,7 @@ interface InterfaceConfig
     /**
      * @return string
      */
-    public function getLogin();
+    public function getUsername();
 
     /**
      * @return string
@@ -30,10 +30,6 @@ interface InterfaceConfig
     /**
      * @return string
      */
-    public function getPrivateUrl();
+    public function getProxyUrl();
 
-    /**
-     * @return string
-     */
-    public function getPublicUrl();
 }

@@ -2,86 +2,75 @@
 
 namespace Galilee\PPM\SDK\Chili\Entity;
 
-use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
-use Galilee\PPM\SDK\Chili\Helper\Parser;
+use Galilee\PPM\SDK\Chili\Client\ResultXml;
 
 /**
  * Class AbstractEntity.
  */
-abstract class AbstractEntity implements InterfaceEntity
+abstract class AbstractEntity
 {
-    const NAME = 'name';
-    const ID = 'id';
 
-    /** @var string $xmlDef */
+    /** @var ResultXml $xmlDef */
     protected $xmlDef = null;
-    /** @var string $id */
-    protected $id = null;
 
-    /** @var array $availablePropertiesMap */
-    protected $availablePropertiesMap = array();
 
     /**
      * Set the entity xml definition
      *
-     * @param string $xml
-     * @param bool $lazy - set lazily the entity ID
+     * AbstractEntity constructor.
+     * @param ResultXml $resultXml
      */
-    public function __construct($xml, $lazy = true)
+    public function __construct(ResultXml $resultXml)
     {
-        $this->xmlDef = $xml;
-        if (!$lazy) {
-            $this->id = $this->getId();
-        }
+        $this->xmlDef = $resultXml;
     }
 
     /**
-     * Get the entity ID
-     *
-     * @return string|null
-     *
-     * @throws InvalidXpathExpressionException
+     * @return null|string
      */
     public function getId()
     {
-        if (!$this->id) {
-            $nodeList = $this->get(self::ID);
-            if ($nodeList->length == 1) {
-                $this->id = $nodeList->item(0)->nodeValue;
-            }
-        }
-
-        return $this->id;
+        return $this->getAttribute('id');
     }
 
     /**
-     * Get the entity XML definition
+     * @return null \ string
+     */
+    public function getName()
+    {
+        return $this->getAttribute('name');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPath()
+    {
+        return $this->getAttribute('path');
+    }
+
+    /**
      *
-     * @return string
+     * @param $attributeName
+     * @return null|string
+     */
+    public function getAttribute($attributeName) {
+        $result = null;
+        if ($this->xmlDef) {
+            $res = $this->xmlDef->asSimpleXml();
+            $result = (string)$res[$attributeName];
+        }
+        return $result;
+    }
+
+
+    /**
+     * Get the entity XML definition.
+     *
+     * @return ResultXml
      */
     public function getXmlDef()
     {
         return $this->xmlDef;
-    }
-
-    /**
-     * General method to fetch information from the xmlDef (xml definition of the entity).
-     *
-     * @param string $key - key defined in $availablePropertiesMap or a XPath expression
-     *
-     * @return \DOMNodeList|null
-     *
-     * @throws InvalidXpathExpressionException
-     */
-    public function get($key)
-    {
-        $nodeList = null;
-        if (isset($this->availablePropertiesMap[$key])) {
-            $expression = $this->availablePropertiesMap[$key];
-        } else {
-            $expression = $key;
-        }
-
-        return Parser::get($this->xmlDef, $expression);
     }
 }

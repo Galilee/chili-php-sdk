@@ -4,19 +4,25 @@ namespace Galilee\PPM\SDK\Chili\Config;
 
 class Config implements InterfaceConfig
 {
-    protected $login;
+    protected $username;
     protected $password;
     protected $wsdlUrl;
     protected $environment;
-    protected $privateUrl;
-    protected $publicUrl;
+    protected $proxyUrl;
+
+    public static $mandatoryFields = array(
+        'username',
+        'password',
+        'wsdlUrl',
+        'environment'
+    );
 
     /**
      * @return string
      */
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
     /**
@@ -46,29 +52,22 @@ class Config implements InterfaceConfig
     /**
      * @return string
      */
-    public function getPrivateUrl()
+    public function getProxyUrl()
     {
-        return $this->privateUrl;
+        return $this->proxyUrl;
     }
-
-    /**
-     * @return string
-     */
-    public function getPublicUrl()
-    {
-        return $this->publicUrl;
-    }
+    
 
     // Setters
 
     /**
-     * @param string $login
+     * @param string $username
      *
      * @return $this
      */
-    public function setLogin($login)
+    public function setUsername($username)
     {
-        $this->login = $login;
+        $this->username = $username;
         return $this;
     }
 
@@ -106,24 +105,13 @@ class Config implements InterfaceConfig
     }
 
     /**
-     * @param string $privateUrl
+     * @param string $proxyUrl
      *
      * @return $this
      */
-    public function setPrivateUrl($privateUrl)
+    public function setProxyUrl($proxyUrl)
     {
-        $this->privateUrl = $privateUrl;
-        return $this;
-    }
-
-    /**
-     * @param string $publicUrl
-     *
-     * @return $this
-     */
-    public function setPublicUrl($publicUrl)
-    {
-        $this->publicUrl = $publicUrl;
+        $this->proxyUrl = $proxyUrl;
         return $this;
     }
 }

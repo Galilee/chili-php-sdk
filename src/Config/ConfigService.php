@@ -10,83 +10,24 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigService
 {
-    private $config = null;
-
     const TYPE_XML = 'xml';
     const TYPE_JSON = 'json';
     const TYPE_YAML = 'yaml';
     const TYPE_PHP_ARRAY = 'php_array';
 
-    protected $allowedTypes = array(
+    protected static $allowedTypes = array(
         self::TYPE_XML,
         self::TYPE_YAML,
         self::TYPE_JSON,
         self::TYPE_PHP_ARRAY
     );
 
-    protected $allowedConfigProperties = array(
-        'login',
-        'password',
-        'wsdlUrl',
-        'environment',
-        'privateUrl',
-        'publicUrl',
-    );
 
-    /**
-     * init configuration object
-     *
-     * @param string $type
-     * @param string|array $conf - should array (key-value pairs), json, yaml or xml format
-     *
-     * @return Config
-     */
-    public function __construct($type, $conf)
+    public static function fromYaml($yaml)
     {
-        $this->config = $this->createConfig($type, $conf);
-    }
-
-    /**
-     * @return Config|null
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Creates Config object from the given $conf parameter
-     *
-     * @param string $type
-     * @param string|array $conf
-     * @throws InvalidConfigurationException
-     * @throws InvalidJsonException
-     * @throws InvalidYamlException
-     *
-     * @return Config $config
-     */
-    private function createConfig($type, $conf)
-    {
-        $result = null;
-        switch ($type) {
-            case self::TYPE_PHP_ARRAY :
-                $result = $this->parseArray($conf);
-                break;
-            case self::TYPE_XML:
-                $result = $this->parseXml($conf);
-                break;
-            case self::TYPE_JSON:
-                $result = $this->parseJson($conf);
-                break;
-            case self::TYPE_YAML:
-                $result = $this->parseYaml($conf);
-                break;
-            default:
-                throw new InvalidConfigurationException('Invalid configuration type. Expected one of: '. implode(', ', $this->allowedTypes));
-        }
-
+        $result = self::parseYaml($yaml);
         $config = new Config();
-        if ($this->checkConfiguration($result)) {
+        if (self::checkConfiguration($result)) {
             // set Config object values
             foreach ($result as $key => $value) {
                 $method = 'set' . ucfirst($key);
@@ -95,18 +36,18 @@ class ConfigService
                 }
             }
         }
-
         return $config;
     }
+
 
     /**
      * Transforms xml to array
      *
      * @param string $xml
-     *
      * @return array
+     * @throws InvalidXmlException
      */
-    protected function parseXml($xml)
+    protected static function parseXml($xml)
     {
         libxml_use_internal_errors(true);
         $resultObject = simplexml_load_string($xml, 'SimpleXMLElement');
@@ -122,7 +63,7 @@ class ConfigService
         $result = array();
         if ($resultObject instanceof \SimpleXMLElement) {
             foreach ($resultObject as $key => $value) {
-                $result[$key] = (string) $value;
+                $result[$key] = (string)$value;
             }
         }
 
@@ -135,10 +76,9 @@ class ConfigService
      *
      * @param string $yaml
      * @throws InvalidYamlException
-     *
      * @return array
      */
-    protected function parseYaml($yaml)
+    protected static function parseYaml($yaml)
     {
         try {
             $decoded = Yaml::parse($yaml);
@@ -156,7 +96,7 @@ class ConfigService
      * @return array
      * @throws InvalidJsonException
      */
-    protected function parseJson($json)
+    protected static function parseJson($json)
     {
         $decoded = @json_decode($json, true);
 
@@ -172,8 +112,9 @@ class ConfigService
      * @param array $arr
      *
      * @return array
+     * @throws InvalidConfigurationException
      */
-    protected function parseArray($arr)
+    protected static function parseArray($arr)
     {
         if (!is_array($arr)) {
             throw new InvalidConfigurationException('Illegal configuration format. The argument $arr should be an array (key => value pairs)');
@@ -191,14 +132,14 @@ class ConfigService
      * @return bool
      * @throws InvalidConfigurationException
      */
-    protected function checkConfiguration($config)
+    protected static function checkConfiguration($config)
     {
         if (!is_array($config)) {
             throw new InvalidConfigurationException('Unknown configuration format.');
         }
 
         $missingProp = array();
-        foreach ($this->allowedConfigProperties as $property) {
+        foreach (Config::$mandatoryFields as $property) {
             if (!isset($config[$property])) {
                 $missingProp[] = $property;
             }
