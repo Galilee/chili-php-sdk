@@ -1,7 +1,0 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <soap:Body>
-        <DocumentCreatePDFResponse xmlns="http://www.chili-publisher.com/">
-            <DocumentCreatePDFResult>&lt;task finished="False" started="False" succeeded="False" hasDependantTasks="False" processingTime="0" totalTime="0" threadNum="0" creationTime="2015-11-06 10:41:47" taskType="pdfGeneration" baseURL="http://example.com//chili/" waitForTaskID="" id="f1a681c5-5078-45eb-8c05-09c321e9025e" userID="c0f63205-4312-40cf-8679-2e93be303afd" userName="test" itemXML="" hasEditorCliLog="False" userEnvironment="galilee" environmentName="galilee" itemID="3728e7ef-adcb-44a3-83f7-d2949edd9cbe" itemName="" resourceName="Documents" result="" errorMessage="" errorStack="" settingsName="pdf-test" saveDocIfNeeded="True" /></DocumentCreatePDFResult>
-        </DocumentCreatePDFResponse>
-    </soap:Body>
-</soap:Envelope>

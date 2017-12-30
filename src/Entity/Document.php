@@ -63,6 +63,21 @@ class Document extends AbstractResourceEntity
     }
 
     /**
+     * Set Variable Values.
+     *
+     * @param string $xmlString
+     * @return string
+     */
+    public function setVariableValues($xmlString)
+    {
+        $params = array(
+            'itemID' => $this->getId(),
+            'varXML' => $xmlString
+        );
+        return $this->client->documentSetVariableValues($params);
+    }
+
+    /**
      * @param PdfExportSetting $pdfExportSetting
      * @param int $taskPriority
      * @return Task

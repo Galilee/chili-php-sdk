@@ -1,7 +1,0 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <soap:Body>
-        <DocumentGetEditorURLResponse xmlns="http://www.chili-publisher.com/">
-            <DocumentGetEditorURLResult><![CDATA[<urlInfo docID="3728e7ef-adcb-44a3-83f7-d2949edd9cbe" wsID="5e57eb29-51e9-4f0d-adfd-531e385cf4ff" relativeURL="/galilee/editor.aspx?doc=3728e7ef-adcb-44a3-83f7-d2949edd9cbe&amp;ws=5e57eb29-51e9-4f0d-adfd-531e385cf4ff&amp;vp=9a672df2-4d3d-44cb-bf97-b5ddc0dfc5a0&amp;c=1e778fb7-ed93-4ca2-aadf-ce5339868fe5&amp;apiKey=Q0Jyyu+UBIXcY38Te0VMOY79qDH4V84oKkVWXQ1RADVDxXS0bFDId+cBVpEkBc2g_kA3RmczjTqZ4ySIJWqPEg==" url="http://example.com/CHILI//galilee/editor.aspx?doc=3728e7ef-adcb-44a3-83f7-d2949edd9cbe&amp;ws=5e57eb29-51e9-4f0d-adfd-531e385cf4ff&amp;vp=9a672df2-4d3d-44cb-bf97-b5ddc0dfc5a0&amp;c=1e778fb7-ed93-4ca2-aadf-ce5339868fe5&amp;apiKey=Q0Jyyu+UBIXcY38Te0VMOY79qDH4V84oKkVWXQ1RADVDxXS0bFDId+cBVpEkBc2g_kA3RmczjTqZ4ySIJWqPEg==" minFlashVersion="10.2.152" />]]></DocumentGetEditorURLResult>
-        </DocumentGetEditorURLResponse>
-    </soap:Body>
-</soap:Envelope>

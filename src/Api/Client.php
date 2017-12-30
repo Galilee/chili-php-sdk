@@ -49,13 +49,13 @@ class Client
     const CHILI_SESSION = '__galilee_chili_publisher__';
 
     /** @var  \SoapClient */
-    private $soapClient;
+    protected $soapClient;
 
     /** @var Config */
-    private $config;
+    protected $config;
 
     /** @var string */
-    private $apiKey;
+    protected $apiKey;
 
     private static $_instance = null;
 
@@ -83,8 +83,13 @@ class Client
     private function connect(Config $config)
     {
         $this->config = $config;
-        $this->soapClient = new \SoapClient($config->getWsdlUrl());
+        $this->soapClient = $this->getSoapClient($config->getWsdlUrl());
         $this->setApiKey();
+    }
+
+    private function getSoapClient($url)
+    {
+        return new \SoapClient($url);
     }
 
     /**
@@ -150,6 +155,7 @@ class Client
         $params = array_merge(['apiKey' => $this->apiKey], $params[0]);
         $methodName = ucfirst(($methodName));
         try {
+            /** @var \stdClass $rawXMLResponse */
             $rawXMLResponse = $this->soapClient->{$methodName}($params);
             return $this->getResponse($rawXMLResponse, $methodName);
         } catch (\Exception $e) {
@@ -157,7 +163,7 @@ class Client
         }
     }
 
-    private function getResponse($rawXMLResponse, $methodName)
+    private function getResponse(\stdClass $rawXMLResponse, $methodName)
     {
         return $rawXMLResponse->{$methodName . 'Result'};
     }

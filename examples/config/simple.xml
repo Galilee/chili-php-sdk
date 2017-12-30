@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<properties>
-    <login>test</login>
-    <password>test@pwd</password>
-    <environment>test</environment>
-    <wsdlUrl>http://test.wsdlurl.fr/testService?wsdl</wsdlUrl>
-    <proxyUrl>http://my-chili-app/chilieditor</proxyUrl>
-
-</properties>
