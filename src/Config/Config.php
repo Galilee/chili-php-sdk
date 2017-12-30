@@ -4,18 +4,22 @@ namespace Galilee\PPM\SDK\Chili\Config;
 
 class Config implements InterfaceConfig
 {
+    CONST WSDL_URL_SUFFIX = '/CHILI/main.asmx?wsdl';
+
     protected $username;
     protected $password;
-    protected $wsdlUrl;
+    protected $url;
     protected $environment;
     protected $proxyUrl;
 
     public static $mandatoryFields = array(
         'username',
         'password',
-        'wsdlUrl',
+        'url',
         'environment'
     );
+
+
 
     /**
      * @return string
@@ -36,9 +40,14 @@ class Config implements InterfaceConfig
     /**
      * @return string
      */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
     public function getWsdlUrl()
     {
-        return $this->wsdlUrl;
+        return $this->getUrl() . self::WSDL_URL_SUFFIX;
     }
 
     /**
@@ -62,7 +71,6 @@ class Config implements InterfaceConfig
 
     /**
      * @param string $username
-     *
      * @return $this
      */
     public function setUsername($username)
@@ -73,7 +81,6 @@ class Config implements InterfaceConfig
 
     /**
      * @param string $password
-     *
      * @return $this
      */
     public function setPassword($password)
@@ -83,19 +90,17 @@ class Config implements InterfaceConfig
     }
 
     /**
-     * @param string $wsdlUrl
-     *
+     * @param string $url
      * @return $this
      */
-    public function setWsdlUrl($wsdlUrl)
+    public function setUrl($url)
     {
-        $this->wsdlUrl = $wsdlUrl;
+        $this->url = $url;
         return $this;
     }
 
     /**
      * @param string $environment
-     *
      * @return $this
      */
     public function setEnvironment($environment)
@@ -106,7 +111,6 @@ class Config implements InterfaceConfig
 
     /**
      * @param string $proxyUrl
-     *
      * @return $this
      */
     public function setProxyUrl($proxyUrl)

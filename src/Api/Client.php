@@ -1,45 +1,61 @@
 <?php
 /**
- * @author Géraud ISSERTES <gissertes@galilee.fr>
  * @copyright © 2017 Galilée (www.galilee.fr)
- *
  */
 
-namespace Galilee\PPM\SDK\Chili\Client;
+namespace Galilee\PPM\SDK\Chili\Api;
 
 use Galilee\PPM\SDK\Chili\Config\Config;
 use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
 
 /**
  * Class SoapCall
  * @package Galilee\PPM\SDK\Chili\Client
  *
- * @method ResultXml resourceSearchByIDs(array $params)
- * @method ResultXml resourceItemGetXML(array $params)
- * @method ResultXml resourceItemSave(array $params)
- * @method ResultXml resourceGetTree(array $params)
- * @method ResultXml resourceItemGetURL(array $params)
- * @method ResultXml documentGetEditorURL(array $params)
- * @method ResultXml setWorkspaceAdministration(array $params)
- * @method ResultXml documentGetInfo(array $params)
- * @method ResultXml ResourceItemDelete(array $params)
- * @method ResultXml documentGetVariableValues(array $params)
- * @method ResultXml documentSetVariableValues(array $params)
- * @method ResultXml documentCreatePDF(array $params)
- * @method ResultXml taskGetStatus(array $params)
+ * Resource methods :
+ *
+ * @method string resourceSearchByIDs(array $params)
+ * @method string resourceGetTree(array $params)
+ *
+ *
+ * Resource Item Methods :
+ *
+ * @method string resourceItemGetXML(array $params)
+ * @method string resourceItemSave(array $params)
+ * @method string resourceItemCopy(array $params)
+ * @method string resourceItemGetURL(array $params)
+ * @method string ResourceItemDelete(array $params)
+ *
+ *
+ * Documents Methods :
+ *
+ * @method string documentGetEditorURL(array $params)
+ * @method string documentGetInfo(array $params)
+ * @method string documentGetVariableValues(array $params)
+ * @method string documentSetVariableValues(array $params)
+ * @method string documentCreatePDF(array $params)
+ *
+ *
+ * Others methods :
+ *
+ * @method string taskGetStatus(array $params)
+ * @method string setWorkspaceAdministration(array $params)
  *
  */
-class SoapCall
+class Client
 {
 
-    const CHILI_SESSION = '__gallee_chilipublisher__';
+    const CHILI_SESSION = '__galilee_chili_publisher__';
 
-    protected $soapClient;
+    /** @var  \SoapClient */
+    private $soapClient;
 
-    /** @var Config null */
-    protected $config = null;
+    /** @var Config */
+    private $config;
 
-    public $apiKey;
+    /** @var string */
+    private $apiKey;
 
     private static $_instance = null;
 
@@ -47,7 +63,7 @@ class SoapCall
     public static function getInstance(Config $config)
     {
         if (is_null(self::$_instance)) {
-            self::$_instance = new SoapCall($config);
+            self::$_instance = new Client($config);
         }
         return self::$_instance;
     }
@@ -57,10 +73,14 @@ class SoapCall
         $this->connect($config);
     }
 
+    public function getConfig()
+    {
+        return $this->config;
+    }
     /**
      * @param Config $config
      */
-    public function connect(Config $config)
+    private function connect(Config $config)
     {
         $this->config = $config;
         $this->soapClient = new \SoapClient($config->getWsdlUrl());
@@ -73,7 +93,7 @@ class SoapCall
      *
      * @return $this
      */
-    public function setApiKey()
+    private function setApiKey()
     {
         if (isset($_SESSION)) {
             if (!isset($_SESSION[self::CHILI_SESSION])) {
@@ -95,9 +115,8 @@ class SoapCall
      * @return string
      * @throws ChiliSoapCallException
      */
-    public function generateApiKey()
+    private function generateApiKey()
     {
-
         try {
             $rawXMLResponse = $this->soapClient->GenerateApiKey(
                 array(
@@ -109,24 +128,21 @@ class SoapCall
                     'wsdl_cache' => 1
                 )
             );
-            $result = $this->setResult($rawXMLResponse, 'GenerateApiKey');
-            $domXml = $result->asDomXml();
-            return $domXml->getElementsByTagName("apiKey")->item(0)->getAttribute("key");
+            $xmlString = $this->getResponse($rawXMLResponse, 'GenerateApiKey');
+            $domXml = XmlUtils::stringToDomDocument($xmlString);
+            return $domXml->getElementsByTagName('apiKey')->item(0)->getAttribute('key');
 
         } catch (\Exception $e) {
             throw new ChiliSoapCallException($e->getMessage(), $e->getCode());
         }
-
     }
 
-
     /**
-     *
      * Perform a Chili webservice call.
      *
      * @param $methodName
      * @param array $params
-     * @return ResultXml
+     * @return string
      * @throws ChiliSoapCallException
      */
     public function __call($methodName, $params = [])
@@ -135,14 +151,14 @@ class SoapCall
         $methodName = ucfirst(($methodName));
         try {
             $rawXMLResponse = $this->soapClient->{$methodName}($params);
-            return $this->setResult($rawXMLResponse, $methodName);
+            return $this->getResponse($rawXMLResponse, $methodName);
         } catch (\Exception $e) {
             throw new ChiliSoapCallException('Error on webservice call "' . $methodName . '" with message: ' . $e->getMessage(), $e->getCode());
         }
     }
 
-    protected function setResult($rawXMLResponse, $methodName)
+    private function getResponse($rawXMLResponse, $methodName)
     {
-        return new ResultXml($rawXMLResponse->{$methodName . 'Result'});
+        return $rawXMLResponse->{$methodName . 'Result'};
     }
 }

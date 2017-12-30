@@ -1,22 +1,38 @@
 <?php
 
 namespace Galilee\PPM\SDK\Chili\Entity;
-use Galilee\PPM\SDK\Chili\Helper\Parser;
 
-/**
- * Class Task.
- */
+use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
+
 class Task extends AbstractEntity
 {
-    CONST CHILI_TRUE = 'True';
-    CONST CHILI_FALSE = 'False';
+    
+    /** @var  \DOMDocument */
+    protected $resultDom;
+    
+    public function setDomFromXmlString($xmlString)
+    {
+        parent::setDomFromXmlString($xmlString);
+        $this->resultDom = $this->parseResultXml();
+    }
+
+
+    public function getStatus()
+    {
+        $params = array(
+            'taskID' => $this->get('id')
+        );
+        $xmlString = $this->client->taskGetStatus($params);
+        $this->setDomFromXmlString($xmlString);
+        return $this;
+    }
 
     /**
      * @return bool
      */
     public function isFinished()
     {
-        return $this->getAttribute('finished') === self::CHILI_TRUE;
+        return $this->getBoolean('finished');
     }
 
     /**
@@ -24,7 +40,12 @@ class Task extends AbstractEntity
      */
     public function isSucceeded()
     {
-        return $this->getAttribute('succeeded') === self::CHILI_TRUE;
+        return $this->getBoolean('succeeded');
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->get('errorMessage');
     }
 
     /**
@@ -32,44 +53,7 @@ class Task extends AbstractEntity
      */
     public function getPath()
     {
-        return $this->getAttribute('path');
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResultUrl()
-    {
-        return $this->getResult()->getAttribute("url");
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResultPath()
-    {
-        return $this->getResult()->getAttribute("path");
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResultRelativeUrl()
-    {
-        return $this->getResult()->getAttribute("relativeURL");
-    }
-
-    /**
-     * @return \DOMElement
-     */
-    public function getResult()
-    {
-        $resultString = $this->getAttribute('result');
-        $resultXmlDom = new \DOMDocument();
-        $resultXmlDom->loadXML($resultString);
-        $xpath = new \DOMXPath($resultXmlDom);
-        $result = $xpath->query("//result");
-        return $result->item(0);
+        return $this->get('path');
     }
 
     /**
@@ -77,6 +61,51 @@ class Task extends AbstractEntity
      */
     public function getRelativeUrl()
     {
-        return $this->getAttribute('relativeURL');
+        return $this->get('relativeURL');
     }
+
+
+    /**
+     * @return null|string
+     */
+    public function getResultUrl()
+    {
+        return $this->getResultAttribute('url');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getResultPath()
+    {
+        return $this->getResultAttribute('path');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getResultRelativeUrl()
+    {
+        return $this->getResultAttribute('relativeURL');
+    }
+
+
+    /**
+     * @return \DOMDocument
+     */
+    protected function parseResultXml()
+    {
+        $resultString = $this->get('result');
+        return XmlUtils::stringToDomDocument($resultString);
+    }
+
+    protected function getResultAttribute($attributeName)
+    {
+        $result = '';
+        if ($rootNode = $this->resultDom->documentElement) {
+            $result = $rootNode->getAttribute($attributeName);
+        }
+        return $result;
+    }
+    
 }

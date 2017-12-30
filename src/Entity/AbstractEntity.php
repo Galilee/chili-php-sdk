@@ -2,75 +2,55 @@
 
 namespace Galilee\PPM\SDK\Chili\Entity;
 
-use Galilee\PPM\SDK\Chili\Client\ResultXml;
+use Galilee\PPM\SDK\Chili\Api\Client;
+use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
 
-/**
- * Class AbstractEntity.
- */
 abstract class AbstractEntity
 {
+    /** @var Client */
+    protected $client;
 
-    /** @var ResultXml $xmlDef */
-    protected $xmlDef = null;
-
+    /** @var \DOMDocument */
+    protected $dom;
 
     /**
-     * Set the entity xml definition
-     *
      * AbstractEntity constructor.
-     * @param ResultXml $resultXml
+     * @param Client $client
+     * @param $xmlString
      */
-    public function __construct(ResultXml $resultXml)
+    public function __construct(Client $client, $xmlString)
     {
-        $this->xmlDef = $resultXml;
+        $this->client = $client;
+        $this->setDomFromXmlString($xmlString);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getId()
+    public function setDomFromXmlString($xmlString)
     {
-        return $this->getAttribute('id');
+        $this->dom = XmlUtils::stringToDomDocument($xmlString);
+        return $this;
     }
 
-    /**
-     * @return null \ string
-     */
-    public function getName()
+    protected function get($attributeName)
     {
-        return $this->getAttribute('name');
+        return $this->dom->documentElement->hasAttribute($attributeName)
+            ? $this->dom->documentElement->getAttribute($attributeName)
+            : '';
     }
 
-    /**
-     * @return null|string
-     */
-    public function getPath()
+    protected function getBoolean($attributeName)
     {
-        return $this->getAttribute('path');
+        return $this->dom->documentElement->hasAttribute($attributeName)
+            ? strtolower($this->dom->documentElement->getAttribute($attributeName)) == 'true'
+            : null;
     }
 
-    /**
-     *
-     * @param $attributeName
-     * @return null|string
-     */
-    public function getAttribute($attributeName) {
-        $result = null;
-        if ($this->xmlDef) {
-            $res = $this->xmlDef->asSimpleXml();
-            $result = (string)$res[$attributeName];
-        }
-        return $result;
+    public function getXmlString()
+    {
+        return $this->dom->saveXML();
     }
 
-
-    /**
-     * Get the entity XML definition.
-     *
-     * @return ResultXml
-     */
-    public function getXmlDef()
+    public function __toString()
     {
-        return $this->xmlDef;
+        return htmlspecialchars($this->dom->saveXML());
     }
 }

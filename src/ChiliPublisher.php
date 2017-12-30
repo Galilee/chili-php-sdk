@@ -7,10 +7,10 @@
 
 namespace Galilee\PPM\SDK\Chili;
 
+use Galilee\PPM\SDK\Chili\Api\Client;
 use Galilee\PPM\SDK\Chili\Config\Config;
-use Galilee\PPM\SDK\Chili\Client\SoapCall;
+use Galilee\PPM\SDK\Chili\Config\ConfigService;
 use Galilee\PPM\SDK\Chili\Service;
-
 
 class ChiliPublisher
 {
@@ -76,34 +76,32 @@ class ChiliPublisher
      */
     const PREVIEW_TYPE_PDF_GENERATION = 'pdfGeneration';
 
-    /** @var Config|null  */
-    protected $config = null;
+    /** @var Client */
+    private $client;
 
-    /** @var SoapCall */
-    public $soapCall;
-
-    public function __construct(Config $config)
+    /**
+     * ChiliPublisher constructor.
+     * @param array $params
+     */
+    public function __construct($params)
     {
-        $this->config = $config;
-        $this->soapCall = SoapCall::getInstance($config);
+        $config = ConfigService::build($params);
+        $this->client = Client::getInstance($config);
     }
 
-    public function getDocument($id = '')
+    public function getClient()
     {
-        $serviceDocument = new Service\Document($this->soapCall);
-        $serviceDocument->setProxyUrl($this->config->getProxyUrl());
-        if ($id) {
-            $serviceDocument->load($id);
-        }
-        return $serviceDocument;
+        return $this->client;
     }
 
-    public function getPdfExportSetting($id = '')
+    public function documents()
     {
-        $serviceDocument = new Service\PdfExportSetting($this->soapCall);
-        if ($id) {
-            $serviceDocument->load($id);
-        }
-        return $serviceDocument;
+        return new Service\Documents($this->client);
     }
+
+    public function pdfExportSettings()
+    {
+        return new Service\PdfExportSettings($this->client);
+    }
+
 }

@@ -26,10 +26,20 @@ class ConfigService
     public static function fromYaml($yaml)
     {
         $result = self::parseYaml($yaml);
+        $config = self::build($result);
+        return $config;
+    }
+
+    /**
+     * @param array $params
+     * @return Config
+     */
+    public static function build($params)
+    {
         $config = new Config();
-        if (self::checkConfiguration($result)) {
+        if (self::checkConfiguration($params)) {
             // set Config object values
-            foreach ($result as $key => $value) {
+            foreach ($params as $key => $value) {
                 $method = 'set' . ucfirst($key);
                 if (method_exists($config, $method)) {
                     $config->{$method}($value);
