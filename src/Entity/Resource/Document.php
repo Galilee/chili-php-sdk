@@ -1,10 +1,11 @@
 <?php
 
-namespace Galilee\PPM\SDK\Chili\Entity;
+namespace Galilee\PPM\SDK\Chili\Entity\Resource;
 
 use Galilee\PPM\SDK\Chili\ChiliPublisher;
-use Galilee\PPM\SDK\Chili\Entity\PdfExportSetting;
-use Galilee\PPM\SDK\Chili\Entity;
+use Galilee\PPM\SDK\Chili\Entity\Task;
+use Galilee\PPM\SDK\Chili\Entity\UrlInfo;
+use Galilee\PPM\SDK\Chili\Entity\Variables;
 
 class Document extends AbstractResourceEntity
 {
@@ -41,7 +42,7 @@ class Document extends AbstractResourceEntity
         $xmlString = $this->client->documentGetEditorURL($params);
         $urlInfo = new UrlInfo($this->client, $xmlString);
         $url = $this->client->getConfig()->getProxyUrl()
-            ? $this->client->getConfig()->getProxyUrl() . $urlInfo->getRelativeURL()
+            ? $this->client->getConfig()->getProxyUrl() . '/' . $urlInfo->getRelativeURL()
             : $urlInfo->getUrl();
 
         // Remove double slashes
@@ -90,7 +91,17 @@ class Document extends AbstractResourceEntity
             'taskPriority' => $taskPriority
         );
         $xmlString = $this->client->documentCreatePDF($params);
-        return new Entity\Task($this->client, $xmlString);
+        return new Task($this->client, $xmlString);
+    }
+
+    /**
+     * Get path.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->get('path');
     }
 
 }

@@ -20,10 +20,10 @@ class PdfExportSettings extends AbstractService
 
     /**
      * @param $xmlString
-     * @return Entity\PdfExportSetting
+     * @return Entity\Resource\PdfExportSetting
      */
     protected function getEntity($xmlString)
     {
-        return new Entity\PdfExportSetting($this->client, $xmlString);
+        return new Entity\Resource\PdfExportSetting($this->client, $xmlString);
     }
 }

@@ -13,6 +13,7 @@ class Task extends AbstractEntity
     public function setDomFromXmlString($xmlString)
     {
         parent::setDomFromXmlString($xmlString);
+        // Result attribute contain xml string, So we have to convert it into DomDocument.
         $this->resultDom = $this->parseResultXml();
     }
 

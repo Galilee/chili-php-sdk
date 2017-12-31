@@ -16,6 +16,7 @@ use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
  * Resource methods :
  *
  * @method string resourceSearchByIDs(array $params)
+ * @method string resourceSearch(array $params)
  * @method string resourceGetTree(array $params)
  *
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace Galilee\PPM\SDK\Chili\Entity;
+namespace Galilee\PPM\SDK\Chili\Entity\Resource;
 
 use Galilee\PPM\SDK\Chili\ChiliPublisher;
 

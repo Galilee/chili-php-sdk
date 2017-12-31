@@ -13,11 +13,11 @@ class Documents extends AbstractService
 
     /**
      * @param $xmlString
-     * @return Entity\Document
+     * @return Entity\Resource\Document
      */
     protected function getEntity($xmlString)
     {
-        return new Entity\Document($this->client, $xmlString);
+        return new Entity\Resource\Document($this->client, $xmlString);
     }
 
     protected function getResourceName()

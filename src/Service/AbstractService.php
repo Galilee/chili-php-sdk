@@ -3,8 +3,11 @@
 namespace Galilee\PPM\SDK\Chili\Service;
 
 use Galilee\PPM\SDK\Chili\Api\Client;
-use Galilee\PPM\SDK\Chili\Entity\AbstractResourceEntity;
+use Galilee\PPM\SDK\Chili\Entity\ItemFileInfo;
+use Galilee\PPM\SDK\Chili\Entity\Resource\AbstractResourceEntity;
 use Galilee\PPM\SDK\Chili\Entity\SearchResult;
+use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+use Galilee\PPM\SDK\Chili\Exception\PathTooLongException;
 use Galilee\PPM\SDK\Chili\Exception\ResourceNotFoundException;
 
 /**
@@ -48,6 +51,7 @@ abstract class AbstractService
      * @param $itemId
      * @return AbstractResourceEntity|null
      * @throws ResourceNotFoundException
+     * @throws ChiliSoapCallException
      */
     public function load($itemId)
     {
@@ -68,22 +72,32 @@ abstract class AbstractService
     }
 
     /**
-     * @todo
+     * Copy resource.
      *
+     * @param $itemId
      * @param $newName
      * @param $folderPath
-     * @return bool
+     * @return ItemFileInfo
+     * @throws PathTooLongException
+     * @throws ChiliSoapCallException
      */
-    public function itemCopy($newName, $folderPath)
+    public function itemCopy($itemId, $newName, $folderPath)
     {
+        if (strlen($newName . $folderPath) >= 260 || strlen($folderPath) >= 248) {
+            throw new PathTooLongException(
+                'The fully qualified file name must be less than 260 characters, 
+                and the directory name must be less than 248 characters.'
+            );
+        }
+        $entity = null;
         $params = array(
             'resourceName' => $this->getResourceName(),
-            'itemID' => $this->getId(),
+            'itemID' => $itemId,
             'newName' => $newName,
             'folderPath' => $folderPath
         );
-        $this->client->resourceItemCopy($params);
-        return true;
+        $xmlString = $this->client->resourceItemCopy($params);
+        return new ItemFileInfo($this->client, $xmlString);
     }
 
 
@@ -94,14 +108,12 @@ abstract class AbstractService
     public function search($name)
     {
         $result = null;
-        if ($this->getResourceName()) {
-            $params = array(
-                'resourceName' => $this->getResourceName(),
-                'name' => $name
-            );
-            $xmlString = $this->client->resourceSearch($params);
-            $result = new SearchResult($this->client, $xmlString);
-        }
+        $params = array(
+            'resourceName' => $this->getResourceName(),
+            'name' => $name
+        );
+        $xmlString = $this->client->resourceSearch($params);
+        $result = new SearchResult($this->client, $xmlString);
         return $result;
     }
 
@@ -113,14 +125,12 @@ abstract class AbstractService
     {
         $ids = implode(';', $ids);
         $result = null;
-        if ($this->getResourceName()) {
-            $params = array(
-                'resourceName' => $this->getResourceName(),
-                'IDs' => $ids
-            );
-            $xmlString = $this->client->resourceSearchByIDs($params);
-            $result = new SearchResult($this->client, $xmlString);
-        }
+        $params = array(
+            'resourceName' => $this->getResourceName(),
+            'IDs' => $ids
+        );
+        $xmlString = $this->client->resourceSearchByIDs($params);
+        $result = new SearchResult($this->client, $xmlString);
         return $result;
     }
 

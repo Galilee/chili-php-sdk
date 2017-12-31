@@ -30,17 +30,25 @@ abstract class AbstractEntity
         return $this;
     }
 
-    protected function get($attributeName)
+    protected function get($attributeName, $parentDomElement = null)
     {
-        return $this->dom->documentElement->hasAttribute($attributeName)
-            ? $this->dom->documentElement->getAttribute($attributeName)
+        if (is_null($parentDomElement)) {
+            $parentDomElement = $this->dom->documentElement;
+        }
+
+        return $parentDomElement->hasAttribute($attributeName)
+            ? $parentDomElement->getAttribute($attributeName)
             : '';
     }
 
-    protected function getBoolean($attributeName)
+    protected function getBoolean($attributeName, $parentDomElement = null)
     {
-        return $this->dom->documentElement->hasAttribute($attributeName)
-            ? strtolower($this->dom->documentElement->getAttribute($attributeName)) == 'true'
+        if (is_null($parentDomElement)) {
+            $parentDomElement = $this->dom->documentElement;
+        }
+
+        return $parentDomElement->hasAttribute($attributeName)
+            ? strtolower($parentDomElement->getAttribute($attributeName)) == 'true'
             : null;
     }
 

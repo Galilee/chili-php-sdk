@@ -1,8 +1,11 @@
 <?php
 
-namespace Galilee\PPM\SDK\Chili\Entity;
+namespace Galilee\PPM\SDK\Chili\Entity\Resource;
 
 use Galilee\PPM\SDK\Chili\ChiliPublisher;
+use Galilee\PPM\SDK\Chili\Entity\AbstractEntity;
+use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+
 
 abstract class AbstractResourceEntity extends AbstractEntity
 {
@@ -19,10 +22,29 @@ abstract class AbstractResourceEntity extends AbstractEntity
         return $this->get('name');
     }
 
+
     /**
+     * @return bool
+     * @throws ChiliSoapCallException
+     */
+    public function save()
+    {
+        $params = array(
+            'resourceName' => $this->getResourceName(),
+            'itemID' => $this->getId(),
+            'xml' => $this->getXmlString()
+        );
+        $this->client->resourceItemSave($params);
+        return true;
+    }
+
+    /**
+     * Get Item url info.
+     *
      * @param string $type
      * @param int $pageNum
      * @return UrlInfo
+     * @throws ChiliSoapCallException
      */
     public function itemGetURL($type, $pageNum = 1)
     {
@@ -32,14 +54,16 @@ abstract class AbstractResourceEntity extends AbstractEntity
             'type' => $type,
             'pageNum' => $pageNum
         );
-
         $xmlString = $this->client->resourceItemGetURL($params);
         return new UrlInfo($this->client, $xmlString);
     }
 
     /**
+     * Get Thumbnail preview url.
+     *
      * @param int $pageNum
      * @return string
+     * @throws ChiliSoapCallException
      */
     public function getThumbnailPreview($pageNum = 1)
     {
@@ -47,18 +71,39 @@ abstract class AbstractResourceEntity extends AbstractEntity
         return $urlInfo->getUrl();
     }
 
+    /**
+     * Get Medium preview url.
+     *
+     * @param int $pageNum
+     * @return string
+     * @throws ChiliSoapCallException
+     */
     public function getMediumPreview($pageNum = 1)
     {
         $urlInfo = $this->itemGetURL(ChiliPublisher::PREVIEW_TYPE_MEDIUM, $pageNum);
         return $urlInfo->getUrl();
     }
 
+    /**
+     * Get Full preview url.
+     *
+     * @param int $pageNum
+     * @return string
+     * @throws ChiliSoapCallException
+     */
     public function getFullPreview($pageNum = 1)
     {
         $urlInfo = $this->itemGetURL(ChiliPublisher::PREVIEW_TYPE_FULL, $pageNum);
         return $urlInfo->getUrl();
     }
 
+    /**
+     * Get Swf preview url.
+     *
+     * @param int $pageNum
+     * @return string
+     * @throws ChiliSoapCallException
+     */
     public function getSwfPreview($pageNum = 1)
     {
         $urlInfo = $this->itemGetURL(ChiliPublisher::PREVIEW_TYPE_SWF, $pageNum);
