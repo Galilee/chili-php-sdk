@@ -4,23 +4,25 @@ namespace Galilee\PPM\SDK\Chili\Entity;
 
 use Galilee\PPM\SDK\Chili\Api\Client;
 use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
+use Galilee\PPM\SDK\Chili\Service\AbstractService;
 
 abstract class AbstractEntity
 {
-    /** @var Client */
-    protected $client;
+    
+    /** @var  AbstractService */
+    protected $service;
 
     /** @var \DOMDocument */
     protected $dom;
 
     /**
      * AbstractEntity constructor.
-     * @param Client $client
+     * @param AbstractService $service
      * @param $xmlString
      */
-    public function __construct(Client $client, $xmlString)
+    public function __construct(AbstractService $service, $xmlString)
     {
-        $this->client = $client;
+        $this->service = $service;
         $this->setDomFromXmlString($xmlString);
     }
 

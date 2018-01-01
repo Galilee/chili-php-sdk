@@ -4,26 +4,44 @@ namespace Galilee\PPM\SDK\Chili\Entity\Resource;
 
 use Galilee\PPM\SDK\Chili\ChiliPublisher;
 use Galilee\PPM\SDK\Chili\Entity\Task;
-use Galilee\PPM\SDK\Chili\Entity\UrlInfo;
 use Galilee\PPM\SDK\Chili\Entity\Variables;
 use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
-use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
+use Galilee\PPM\SDK\Chili\Service\Resource\Documents;
 
 class Document extends AbstractResourceEntity
 {
+
+    /** @var  Documents */
+    protected $service;
+
+
     protected function getResourceName()
     {
         return ChiliPublisher::RESOURCE_NAME_DOCUMENTS;
     }
 
     /**
+     * Get path attribute.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->get('path');
+    }
+
+
+
+    /**
+     * Get Url Editor.
+     *
      * @param bool $allowWorkspaceAdministration
      * @param string $viewPrefsID
      * @param string $workSpaceID
      * @param string $constraintsID
      * @param string $viewerOnly
      * @param bool $forAnonymousUser
-     * @return mixed
+     * @return string
      * @throws ChiliSoapCallException
      */
     public function getEditorUrl(
@@ -35,30 +53,15 @@ class Document extends AbstractResourceEntity
         $forAnonymousUser = false
     )
     {
-        if ($allowWorkspaceAdministration) {
-            $this->client->setWorkspaceAdministration(
-                array(
-                    'allowWorkspaceAdministration' => $allowWorkspaceAdministration
-                )
-            );
-        }
-
-        $params = array(
-            'itemID' => $this->get('id'),
-            'viewPrefsID' => $viewPrefsID,
-            'workSpaceID' => $workSpaceID,
-            'constraintsID' => $constraintsID,
-            'viewerOnly' => $viewerOnly,
-            'forAnonymousUser' => $forAnonymousUser,
+        return $this->service->getEditorUrl(
+            $this->get('id'),
+            $allowWorkspaceAdministration ,
+            $viewPrefsID,
+            $workSpaceID,
+            $constraintsID,
+            $viewerOnly,
+            $forAnonymousUser
         );
-        $xmlString = $this->client->documentGetEditorURL($params);
-        $urlInfo = new UrlInfo($this->client, $xmlString);
-        $url = $this->client->getConfig()->getProxyUrl()
-            ? $this->client->getConfig()->getProxyUrl() . '/' . $urlInfo->getRelativeURL()
-            : $urlInfo->getUrl();
-
-        // Remove double slashes
-        return preg_replace('/([^:])(\/{2,})/', '$1/', $url);
     }
 
     /**
@@ -69,11 +72,7 @@ class Document extends AbstractResourceEntity
      */
     public function getVariableValues()
     {
-        $params = array(
-            'itemID' => $this->get('id'),
-        );
-        $xmlString = $this->client->documentGetVariableValues($params);
-        return new Variables($this->client, $xmlString);
+        return $this->service->getVariableValues($this->get('id)'));
     }
 
     /**
@@ -85,11 +84,7 @@ class Document extends AbstractResourceEntity
      */
     public function setVariableValues(Variables $variables)
     {
-        $params = array(
-            'itemID' => $this->getId(),
-            'varXML' => $variables->getXmlString()
-        );
-        $this->client->documentSetVariableValues($params);
+        $this->service->setVariableValues($this->get('id'), $variables->getXmlString());
         return $this;
     }
 
@@ -101,23 +96,7 @@ class Document extends AbstractResourceEntity
      */
     public function createPDF($settingsXML, $taskPriority = 7)
     {
-        $params = array(
-            'itemID' => $this->getId(),
-            'settingsXML' => $settingsXML,
-            'taskPriority' => $taskPriority
-        );
-        $xmlString = $this->client->documentCreatePDF($params);
-        return new Task($this->client, $xmlString);
-    }
-
-    /**
-     * Get path.
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->get('path');
+        return $this->service->createPDF($this->get('id'), $settingsXML, $taskPriority);
     }
 
 }

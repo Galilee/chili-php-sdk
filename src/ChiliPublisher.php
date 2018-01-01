@@ -8,10 +8,15 @@
 namespace Galilee\PPM\SDK\Chili;
 
 use Galilee\PPM\SDK\Chili\Api\Client;
-use Galilee\PPM\SDK\Chili\Config\Config;
 use Galilee\PPM\SDK\Chili\Config\ConfigService;
-use Galilee\PPM\SDK\Chili\Service;
+use Galilee\PPM\SDK\Chili\Service\Resource\PdfExportSettings;
+use Galilee\PPM\SDK\Chili\Service\Resource\Documents;
+use Galilee\PPM\SDK\Chili\Service\Tasks;
 
+/**
+ * Class ChiliPublisher
+ * @package Galilee\PPM\SDK\Chili
+ */
 class ChiliPublisher
 {
 
@@ -96,12 +101,31 @@ class ChiliPublisher
 
     public function documents()
     {
-        return new Service\Documents($this->client);
+        return new Documents($this->client);
     }
 
     public function pdfExportSettings()
     {
-        return new Service\PdfExportSettings($this->client);
+        return new PdfExportSettings($this->client);
+    }
+
+    /**
+     * @param $itemID
+     * @param $settingsXML
+     * @param int $taskPriority The priority (1-10) of the task
+     * @param bool $async
+     * @param int $syncTimeOut
+     * @return Entity\Task
+     */
+    public function createPdf($itemID, $settingsXML, $taskPriority = 7,$async = true, $syncTimeOut = 30)
+    {
+        return (new Documents($this->client))->createPdf(
+            $itemID,
+            $settingsXML,
+            $taskPriority,
+            $async,
+            $syncTimeOut
+        );
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Galilee\PPM\SDK\Chili\Entity;
 
 use Galilee\PPM\SDK\Chili\Api\Client;
+use Galilee\PPM\SDK\Chili\Service\AbstractService;
 
 /**
  * Result from chili methods :
@@ -18,9 +19,9 @@ class ItemFileInfo extends AbstractEntity
     /** @var \DOMElement */
     protected $fileInfoNode;
 
-    public function __construct(Client $client, $xmlString)
+    public function __construct(AbstractService $service, $xmlString)
     {
-        parent::__construct($client, $xmlString);
+        parent::__construct($service, $xmlString);
         $this->fileInfoNode = $this->dom->documentElement
             ->getElementsByTagName('fileInfo')
             ->item(0);

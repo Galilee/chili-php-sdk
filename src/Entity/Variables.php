@@ -12,17 +12,23 @@ class Variables extends AbstractEntity
         $this->dom->documentElement->setAttribute('savedInEditor', 'false');
     }
 
-    public function getVariables()
+    /**
+     * Get all variable names.
+     */
+    public function getVariableNames()
     {
+        $names = array();
         $items = $this->dom->documentElement->childNodes;
         /** @var \DOMElement $item */
         foreach ($items as $item)
         {
-            echo $item->getAttribute('name') . '<br />';
+            $names[] = $item->getAttribute('name');
         }
     }
 
     /**
+     * Get variable value by name.
+     *
      * @param $name
      * @return string
      */
@@ -32,6 +38,12 @@ class Variables extends AbstractEntity
         return $variable->getAttribute('value');
     }
 
+    /**
+     * Set variable value.
+     *
+     * @param $name
+     * @param $value
+     */
     public function setValue($name, $value)
     {
         $variable = $this->getVariableDomElementByName($name);
@@ -39,6 +51,8 @@ class Variables extends AbstractEntity
     }
 
     /**
+     * Get item by name attribute.
+     *
      * @param $name
      * @return \DOMElement
      */

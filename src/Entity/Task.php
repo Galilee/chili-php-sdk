@@ -3,9 +3,13 @@
 namespace Galilee\PPM\SDK\Chili\Entity;
 
 use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
+use Galilee\PPM\SDK\Chili\Service\Tasks;
+use PHPUnit\Util\Xml;
 
 class Task extends AbstractEntity
 {
+    /** @var  Tasks */
+    protected $service;
     
     /** @var  \DOMDocument */
     protected $resultDom;
@@ -17,15 +21,16 @@ class Task extends AbstractEntity
         $this->resultDom = $this->parseResultXml();
     }
 
-
     public function getStatus()
     {
-        $params = array(
-            'taskID' => $this->get('id')
-        );
-        $xmlString = $this->client->taskGetStatus($params);
+        $xmlString = $this->service->getStatus($this->getId());
         $this->setDomFromXmlString($xmlString);
         return $this;
+    }
+
+    public function getId()
+    {
+        return $this->get('id');
     }
 
     /**

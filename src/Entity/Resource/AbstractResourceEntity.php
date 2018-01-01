@@ -4,19 +4,33 @@ namespace Galilee\PPM\SDK\Chili\Entity\Resource;
 
 use Galilee\PPM\SDK\Chili\ChiliPublisher;
 use Galilee\PPM\SDK\Chili\Entity\AbstractEntity;
+use Galilee\PPM\SDK\Chili\Entity\UrlInfo;
 use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+use Galilee\PPM\SDK\Chili\Service\Resource\AbstractResourceService;
 
 
 abstract class AbstractResourceEntity extends AbstractEntity
 {
+    /** @var  AbstractResourceService */
+    protected $service;
 
     abstract protected function getResourceName();
 
+    /**
+     * Get id attribute.
+     *
+     * @return string
+     */
     public function getId()
     {
         return $this->get('id');
     }
 
+    /**
+     * Get name attribute.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->get('name');
@@ -24,18 +38,15 @@ abstract class AbstractResourceEntity extends AbstractEntity
 
 
     /**
-     * @return bool
+     * Save Resource.
+     *
+     * @return $this
      * @throws ChiliSoapCallException
      */
     public function save()
     {
-        $params = array(
-            'resourceName' => $this->getResourceName(),
-            'itemID' => $this->getId(),
-            'xml' => $this->getXmlString()
-        );
-        $this->client->resourceItemSave($params);
-        return true;
+        $this->service->save($this->getResourceName(), $this->getId(), $this->getXmlString());
+        return $this;
     }
 
     /**
@@ -48,14 +59,7 @@ abstract class AbstractResourceEntity extends AbstractEntity
      */
     public function itemGetURL($type, $pageNum = 1)
     {
-        $params = array(
-            'resourceName' => $this->getResourceName(),
-            'itemID' => $this->getId(),
-            'type' => $type,
-            'pageNum' => $pageNum
-        );
-        $xmlString = $this->client->resourceItemGetURL($params);
-        return new UrlInfo($this->client, $xmlString);
+        return $this->service->itemGetURL($this->getId(), $type, $pageNum);
     }
 
     /**

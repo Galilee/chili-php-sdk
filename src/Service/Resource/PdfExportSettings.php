@@ -1,16 +1,15 @@
 <?php
 
-namespace Galilee\PPM\SDK\Chili\Service;
+namespace Galilee\PPM\SDK\Chili\Service\Resource;
 
 use Galilee\PPM\SDK\Chili\ChiliPublisher;
-use Galilee\PPM\SDK\Chili\Entity;
+use Galilee\PPM\SDK\Chili\Entity\Resource\PdfExportSetting;
 
 /**
  * Class PdfExportSetting
  * @package Galilee\PPM\SDK\Chili\Service
- *
  */
-class PdfExportSettings extends AbstractService
+class PdfExportSettings extends AbstractResourceService
 {
 
     protected function getResourceName()
@@ -20,10 +19,10 @@ class PdfExportSettings extends AbstractService
 
     /**
      * @param $xmlString
-     * @return Entity\Resource\PdfExportSetting
+     * @return PdfExportSetting
      */
     protected function getEntity($xmlString)
     {
-        return new Entity\Resource\PdfExportSetting($this->client, $xmlString);
+        return new PdfExportSetting($this, $xmlString);
     }
 }
