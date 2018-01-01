@@ -6,6 +6,8 @@ use Galilee\PPM\SDK\Chili\ChiliPublisher;
 use Galilee\PPM\SDK\Chili\Entity\Task;
 use Galilee\PPM\SDK\Chili\Entity\UrlInfo;
 use Galilee\PPM\SDK\Chili\Entity\Variables;
+use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
 
 class Document extends AbstractResourceEntity
 {
@@ -14,6 +16,16 @@ class Document extends AbstractResourceEntity
         return ChiliPublisher::RESOURCE_NAME_DOCUMENTS;
     }
 
+    /**
+     * @param bool $allowWorkspaceAdministration
+     * @param string $viewPrefsID
+     * @param string $workSpaceID
+     * @param string $constraintsID
+     * @param string $viewerOnly
+     * @param bool $forAnonymousUser
+     * @return mixed
+     * @throws ChiliSoapCallException
+     */
     public function getEditorUrl(
         $allowWorkspaceAdministration = false,
         $viewPrefsID = '',
@@ -52,7 +64,8 @@ class Document extends AbstractResourceEntity
     /**
      * Get Variable Values.
      *
-     * @return string
+     * @return Variables
+     * @throws ChiliSoapCallException
      */
     public function getVariableValues()
     {
@@ -66,28 +79,31 @@ class Document extends AbstractResourceEntity
     /**
      * Set Variable Values.
      *
-     * @param string $xmlString
-     * @return string
+     * @param Variables $variables
+     * @return $this
+     * @throws ChiliSoapCallException
      */
-    public function setVariableValues($xmlString)
+    public function setVariableValues(Variables $variables)
     {
         $params = array(
             'itemID' => $this->getId(),
-            'varXML' => $xmlString
+            'varXML' => $variables->getXmlString()
         );
-        return $this->client->documentSetVariableValues($params);
+        $this->client->documentSetVariableValues($params);
+        return $this;
     }
 
     /**
-     * @param PdfExportSetting $pdfExportSetting
+     * @param string $settingsXML
      * @param int $taskPriority
      * @return Task
+     * @throws ChiliSoapCallException
      */
-    public function createPDF(PdfExportSetting $pdfExportSetting, $taskPriority = 7)
+    public function createPDF($settingsXML, $taskPriority = 7)
     {
         $params = array(
             'itemID' => $this->getId(),
-            'settingsXML' => $pdfExportSetting->getXmlString(),
+            'settingsXML' => $settingsXML,
             'taskPriority' => $taskPriority
         );
         $xmlString = $this->client->documentCreatePDF($params);

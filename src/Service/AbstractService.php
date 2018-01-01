@@ -7,6 +7,7 @@ use Galilee\PPM\SDK\Chili\Entity\ItemFileInfo;
 use Galilee\PPM\SDK\Chili\Entity\Resource\AbstractResourceEntity;
 use Galilee\PPM\SDK\Chili\Entity\SearchResult;
 use Galilee\PPM\SDK\Chili\Exception\ChiliSoapCallException;
+use Galilee\PPM\SDK\Chili\Exception\EntityNotFoundException;
 use Galilee\PPM\SDK\Chili\Exception\PathTooLongException;
 use Galilee\PPM\SDK\Chili\Exception\ResourceNotFoundException;
 
@@ -80,6 +81,7 @@ abstract class AbstractService
      * @return ItemFileInfo
      * @throws PathTooLongException
      * @throws ChiliSoapCallException
+     * @throws EntityNotFoundException
      */
     public function itemCopy($itemId, $newName, $folderPath)
     {
@@ -89,6 +91,10 @@ abstract class AbstractService
                 and the directory name must be less than 248 characters.'
             );
         }
+        if (!$this->isExists($itemId)) {
+            throw new EntityNotFoundException($itemId . ' not found.');
+        }
+        // TODO Check if $itemId exists before copy
         $entity = null;
         $params = array(
             'resourceName' => $this->getResourceName(),
@@ -104,6 +110,7 @@ abstract class AbstractService
     /**
      * @param $name
      * @return SearchResult|null
+     * @throws ChiliSoapCallException
      */
     public function search($name)
     {
@@ -118,8 +125,9 @@ abstract class AbstractService
     }
 
     /**
-     * @param $ids
+     * @param array $ids
      * @return SearchResult|null
+     * @throws ChiliSoapCallException
      */
     public function searchByIDs($ids)
     {
@@ -142,6 +150,7 @@ abstract class AbstractService
     /**
      * @param $itemId
      * @return bool
+     * @throws ChiliSoapCallException
      */
     public function isExists($itemId)
     {

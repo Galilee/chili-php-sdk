@@ -5,7 +5,7 @@ namespace Galilee\PPM\SDK\Chili\Entity;
 use Galilee\PPM\SDK\Chili\Api\Client;
 
 /**
- * Resulte from chili methods :
+ * Result from chili methods :
  *  - ResourceSearch
  *  - ResourceSearchByIDs
  *  - ResourceItemCopy
