@@ -59,7 +59,7 @@ abstract class AbstractResourceEntity extends AbstractEntity
      */
     public function itemGetURL($type, $pageNum = 1)
     {
-        return $this->service->itemGetURL($this->getId(), $type, $pageNum);
+        return $this->service->itemGetURL($this->getResourceName(), $this->getId(), $type, $pageNum);
     }
 
     /**

@@ -26,7 +26,7 @@ class ChiliPublisher
     const RESOURCE_NAME_ARTICLES = 'Articles';
     const RESOURCE_NAME_ASSETS = 'Assets';
     const RESOURCE_NAME_BAR_CODE_TYPES = 'BarcodeTypes';
-    const RESOURCE_NAME_COMPOSITE_PDF_EXPORTSETTINGS = 'CompositePdfExportSettings';
+    const RESOURCE_NAME_COMPOSITE_PDF_EXPORT_SETTINGS = 'CompositePdfExportSettings';
     const RESOURCE_NAME_DATA_SOURCES = 'DataSources';
     const RESOURCE_NAME_DOCUMENTS = 'Documents';
     const RESOURCE_NAME_DOCUMENT_CONSTRAINTS = 'DocumentConstraints';
@@ -81,8 +81,9 @@ class ChiliPublisher
      */
     const PREVIEW_TYPE_PDF_GENERATION = 'pdfGeneration';
 
+
     /** @var Client */
-    private $client;
+    protected $client;
 
     /**
      * ChiliPublisher constructor.
@@ -101,12 +102,12 @@ class ChiliPublisher
 
     public function documents()
     {
-        return new Documents($this->client);
+        return $this->getDocuments();
     }
 
     public function pdfExportSettings()
     {
-        return new PdfExportSettings($this->client);
+        return $this->getPdfExportSettings();
     }
 
     /**
@@ -119,7 +120,7 @@ class ChiliPublisher
      */
     public function createPdf($itemID, $settingsXML, $taskPriority = 7,$async = true, $syncTimeOut = 30)
     {
-        return (new Documents($this->client))->createPdf(
+        return $this->getDocuments()->createPdf(
             $itemID,
             $settingsXML,
             $taskPriority,
@@ -128,4 +129,13 @@ class ChiliPublisher
         );
     }
 
+    protected function getDocuments()
+    {
+        return new Documents($this->getClient());
+    }
+
+    protected function getPdfExportSettings()
+    {
+        return new PdfExportSettings($this->getClient());
+    }
 }

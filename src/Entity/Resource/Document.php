@@ -54,7 +54,7 @@ class Document extends AbstractResourceEntity
     )
     {
         return $this->service->getEditorUrl(
-            $this->get('id'),
+            $this->getId(),
             $allowWorkspaceAdministration ,
             $viewPrefsID,
             $workSpaceID,
@@ -72,7 +72,7 @@ class Document extends AbstractResourceEntity
      */
     public function getVariableValues()
     {
-        return $this->service->getVariableValues($this->get('id)'));
+        return $this->service->getVariableValues($this->getId());
     }
 
     /**
@@ -84,7 +84,7 @@ class Document extends AbstractResourceEntity
      */
     public function setVariableValues(Variables $variables)
     {
-        $this->service->setVariableValues($this->get('id'), $variables->getXmlString());
+        $this->service->setVariableValues($this->getId(), $variables->getXmlString());
         return $this;
     }
 
@@ -96,7 +96,7 @@ class Document extends AbstractResourceEntity
      */
     public function createPDF($settingsXML, $taskPriority = 7)
     {
-        return $this->service->createPDF($this->get('id'), $settingsXML, $taskPriority);
+        return $this->service->createPDF($this->getId(), $settingsXML, $taskPriority);
     }
 
 }
