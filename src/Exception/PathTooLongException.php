@@ -3,10 +3,10 @@
 namespace Galilee\PPM\SDK\Chili\Exception;
 
 /**
- * Class InvalidDocumentException
+ * Class ChiliSoapCallException
  *
  * @package Galilee\PPM\SDK\Chili\Exception
  */
-class InvalidDocumentException extends \Exception
+class PathTooLongException extends  \Exception
 {
 }

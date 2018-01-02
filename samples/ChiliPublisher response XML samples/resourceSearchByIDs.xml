@@ -1,0 +1,45 @@
+<searchresults>
+    <item name="GalileeV2"
+          id="067cd7e9-ed66-40ca-b326-ef2312ddac11"
+          relativePath="Demo\Cartes\GalileeV2.xml"
+          hasPreviewErrors="false"
+          iconURL="galilee/download.aspx?type=thumb&amp;resourceName=Documents&amp;id=067cd7e9-ed66-40ca-b326-ef2312ddac11&amp;apiKey=Q0Jyyu+UBIXng5g_2al05fmoZYrnKMp4dHPTr4KNvQtbk3BfCbiucY19CwGoyb7XdIbRw2RghLXfSPcVMlbGrg==&amp;pageNum=1">
+        <fileInfo fileIndexed="2017-09-28 18:26:02"
+                  numPages="1"
+                  resolution="72"
+                  width="240.941"
+                  height="155.903"
+                  fileSize="76.53 Kb">
+            <metaData>
+                <item name="Num. Pages"
+                      value="1"/>
+                <item name="Width"
+                      value="85 mm"/>
+                <item name="Height"
+                      value="55 mm"/>
+            </metaData>
+            <boxes/>
+        </fileInfo>
+    </item>
+    <item name="copy-test"
+          id="9e3448c7-7d39-415d-8116-1929850769d8"
+          relativePath="Demo\Cartes\copy-test.xml"
+          iconURL="galilee/download.aspx?type=thumb&amp;resourceName=Documents&amp;id=9e3448c7-7d39-415d-8116-1929850769d8&amp;apiKey=Q0Jyyu+UBIXng5g_2al05fmoZYrnKMp4dHPTr4KNvQtbk3BfCbiucY19CwGoyb7XdIbRw2RghLXfSPcVMlbGrg==&amp;pageNum=1">
+        <fileInfo fileIndexed="2017-09-28 17:59:35"
+                  numPages="1"
+                  resolution="72"
+                  width="240.941"
+                  height="155.903"
+                  fileSize="145.09 Kb">
+            <metaData>
+                <item name="Num. Pages"
+                      value="1"/>
+                <item name="Width"
+                      value="85 mm"/>
+                <item name="Height"
+                      value="55 mm"/>
+            </metaData>
+            <boxes/>
+        </fileInfo>
+    </item>
+</searchresults>

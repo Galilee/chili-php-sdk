@@ -8,32 +8,28 @@ namespace Galilee\PPM\SDK\Chili\Config;
 interface InterfaceConfig
 {
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLogin();
+    public function getUsername();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getWsdlUrl();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEnvironment();
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPrivateUrl();
+    public function getProxyUrl();
 
-    /**
-     * @return mixed
-     */
-    public function getPublicUrl();
 }

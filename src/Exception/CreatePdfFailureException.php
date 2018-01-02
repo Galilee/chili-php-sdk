@@ -3,10 +3,9 @@
 namespace Galilee\PPM\SDK\Chili\Exception;
 
 /**
- * Class InvalidDocumentException
- *
+ * Class CreatePdfFailureException
  * @package Galilee\PPM\SDK\Chili\Exception
  */
-class InvalidDocumentException extends \Exception
+class CreatePdfFailureException extends  \Exception
 {
 }

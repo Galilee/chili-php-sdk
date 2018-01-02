@@ -1,0 +1,45 @@
+<searchresults found="2"
+               total="9214">
+    <item name="GalileeV2"
+          id="067cd7e9-ed66-40ca-b326-ef2312ddac11"
+          relativePath="Demo\Cartes\GalileeV2.xml"
+          hasPreviewErrors="false">
+        <fileInfo fileIndexed="2017-09-28 18:26:02"
+                  numPages="1"
+                  resolution="72"
+                  width="240.941"
+                  height="155.903"
+                  fileSize="76.53 Kb">
+            <metaData>
+                <item name="Num. Pages"
+                      value="1"/>
+                <item name="Width"
+                      value="85 mm"/>
+                <item name="Height"
+                      value="55 mm"/>
+            </metaData>
+            <boxes/>
+        </fileInfo>
+    </item>
+    <item name="Galilee"
+          id="204c1ea0-efad-490b-9ea9-7bde46ec1c7d"
+          relativePath="Demo\Cartes\Galilee.xml"
+          hasPreviewErrors="false">
+        <fileInfo fileIndexed="2013-04-26 15:49:43"
+                  numPages="1"
+                  resolution="72"
+                  width="240.941"
+                  height="155.903"
+                  fileSize="143.81 Kb">
+            <metaData>
+                <item name="Num. Pages"
+                      value="1"/>
+                <item name="Width"
+                      value="85 mm"/>
+                <item name="Height"
+                      value="55 mm"/>
+            </metaData>
+            <boxes/>
+        </fileInfo>
+    </item>
+</searchresults>
