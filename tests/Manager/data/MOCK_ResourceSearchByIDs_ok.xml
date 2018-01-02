@@ -1,7 +1,0 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <soap:Body>
-        <ResourceSearchByIDsResponse xmlns="http://www.chili-publisher.com/">
-            <ResourceSearchByIDsResult><![CDATA[<searchresults><item name="snippetHotel" id="3728e7ef-adcb-44a3-83f7-d2949edd9cbe" relativePath="Formation\Geraud\Pimcore\snippetHotel.xml" iconURL="galilee/download.aspx?type=thumb&amp;resourceName=Documents&amp;id=3728e7ef-adcb-44a3-83f7-d2949edd9cbe&amp;apiKey=Q0Jyyu+UBIW80D0Qyo5KMBrCB68sQgUVdpyjFFZYXG7VLIenG1tjVQGYAKzWDGVRs1DzMo4k+Ix27mnLKI9vTA==&amp;pageNum=1"><fileInfo fileIndexed="2013-12-02 13:42:46" numPages="1" resolution="72" width="595.266" height="280.6254" fileSize="41.52 Kb"><metaData><item name="Num. Pages" value="1" /><item name="Width" value="210 mm" /><item name="Height" value="99 mm" /></metaData><boxes /></fileInfo></item></searchresults>]]></ResourceSearchByIDsResult>
-        </ResourceSearchByIDsResponse>
-    </soap:Body>
-</soap:Envelope>

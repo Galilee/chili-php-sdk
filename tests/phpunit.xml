@@ -1,25 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<phpunit bootstrap="./bootstrap.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         stopOnFailure="false"
-         syntaxCheck="true"
-         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
-    <testsuite name="Entity Test Suite">
-        <directory sufix="Test.php">./Entity/</directory>
-    </testsuite>
-    <testsuite name="Config Test Suite">
-        <directory sufix="Test.php">./Config/</directory>
-    </testsuite>
-    <testsuite name="Exception Test Suite">
-        <directory sufix="Test.php">./Exception/</directory>
-    </testsuite>
-    <testsuite name="Manager Test Suite">
-        <directory sufix="Test.php">./Manager/</directory>
-    </testsuite>
-    <testsuite name="Helper Test Suite">
-        <directory sufix="Test.php">./Helper/</directory>
-    </testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./bootstrap.php" colors="true">
+
+    <testsuites>
+        <testsuite name="ChiliPublisher SDK">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+
 </phpunit>

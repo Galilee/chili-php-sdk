@@ -1,16 +1,19 @@
 # Galilee CHILI PHP SDK
 
+## Links
+
+* [Chili Publish](https://www.chili-publish.com/start)
+
 ## Requirements
-- PHP > 5.3.2
-- composer
 
-## Tests Unitaires
-- Launch `$ php vendor/bin/phpunit --configuration tests/phpunit.xml`
+* PHP > 5.3.2
+* composer
 
-## Installation
+## How to install
 
-`> composer install`
+```console
+composer install
+```
 
 ## Usage
 
-- todo

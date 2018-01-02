@@ -4,19 +4,29 @@ namespace Galilee\PPM\SDK\Chili\Config;
 
 class Config implements InterfaceConfig
 {
-    protected $login;
+    CONST WSDL_URL_SUFFIX = '/CHILI/main.asmx?wsdl';
+
+    protected $username;
     protected $password;
-    protected $wsdlUrl;
+    protected $url;
     protected $environment;
-    protected $privateUrl;
-    protected $publicUrl;
+    protected $proxyUrl;
+
+    public static $mandatoryFields = array(
+        'username',
+        'password',
+        'url',
+        'environment'
+    );
+
+
 
     /**
      * @return string
      */
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
     /**
@@ -30,9 +40,14 @@ class Config implements InterfaceConfig
     /**
      * @return string
      */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
     public function getWsdlUrl()
     {
-        return $this->wsdlUrl;
+        return $this->getUrl() . self::WSDL_URL_SUFFIX;
     }
 
     /**
@@ -46,35 +61,26 @@ class Config implements InterfaceConfig
     /**
      * @return string
      */
-    public function getPrivateUrl()
+    public function getProxyUrl()
     {
-        return $this->privateUrl;
+        return $this->proxyUrl;
     }
-
-    /**
-     * @return string
-     */
-    public function getPublicUrl()
-    {
-        return $this->publicUrl;
-    }
+    
 
     // Setters
 
     /**
-     * @param string $login
-     *
+     * @param string $username
      * @return $this
      */
-    public function setLogin($login)
+    public function setUsername($username)
     {
-        $this->login = $login;
+        $this->username = $username;
         return $this;
     }
 
     /**
      * @param string $password
-     *
      * @return $this
      */
     public function setPassword($password)
@@ -84,19 +90,17 @@ class Config implements InterfaceConfig
     }
 
     /**
-     * @param string $wsdlUrl
-     *
+     * @param string $url
      * @return $this
      */
-    public function setWsdlUrl($wsdlUrl)
+    public function setUrl($url)
     {
-        $this->wsdlUrl = $wsdlUrl;
+        $this->url = $url;
         return $this;
     }
 
     /**
      * @param string $environment
-     *
      * @return $this
      */
     public function setEnvironment($environment)
@@ -106,24 +110,12 @@ class Config implements InterfaceConfig
     }
 
     /**
-     * @param string $privateUrl
-     *
+     * @param string $proxyUrl
      * @return $this
      */
-    public function setPrivateUrl($privateUrl)
+    public function setProxyUrl($proxyUrl)
     {
-        $this->privateUrl = $privateUrl;
-        return $this;
-    }
-
-    /**
-     * @param string $publicUrl
-     *
-     * @return $this
-     */
-    public function setPublicUrl($publicUrl)
-    {
-        $this->publicUrl = $publicUrl;
+        $this->proxyUrl = $proxyUrl;
         return $this;
     }
 }

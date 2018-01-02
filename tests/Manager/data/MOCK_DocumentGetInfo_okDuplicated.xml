@@ -1,7 +1,0 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <soap:Body>
-        <DocumentGetInfoResponse xmlns="http://www.chili-publisher.com/">
-            <DocumentGetInfoResult>&lt;documentInfo id="b9c5b755-aa96-4220-b5d9-b4981039a2ed" name="copy" path="Formation\Geraud\Pimcore\copy.xml" zoom="105.66376451826349" width="210 mm" height="99 mm" bleedLeft="2mm" bleedTop="2mm" bleedRight="2mm" bleedBottom="2mm" initialLayout="8AA5489D-F978-0728-69AC-15D9787EDB48" initialLayoutName="[Default]" savedInEditor="true" textLanguage="" chiliVersion="3.5.0.0" foldSettingID="" foldDocIdentifier="" numPages="1">&lt;alternateLayouts>&lt;item id="8AA5489D-F978-0728-69AC-15D9787EDB48" name="[Default]" width="210 mm" height="99 mm" />&lt;/alternateLayouts>&lt;/documentInfo></DocumentGetInfoResult>
-        </DocumentGetInfoResponse>
-    </soap:Body>
-</soap:Envelope>

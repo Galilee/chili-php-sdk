@@ -2,69 +2,116 @@
 
 namespace Galilee\PPM\SDK\Chili\Entity;
 
-use Galilee\PPM\SDK\Chili\Helper\Parser;
+use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
+use Galilee\PPM\SDK\Chili\Service\Tasks;
+use PHPUnit\Util\Xml;
 
-/**
- * Class Task.
- */
 class Task extends AbstractEntity
 {
-    const STATUS_FINISHED = 'finished';
-    const STATUS_SUCCEEDED = 'succeeded';
-    const STATUS_PATH = 'path';
-    const STATUS_URL = 'url';
-    const STATUS_RELATIVE_URL = 'relativeUrl';
-    const STATUS_ERROR_MESSAGE = 'errorMessage';
-    const STATUS_ERROR_STACK = 'errorStack';
+    /** @var  Tasks */
+    protected $service;
+    
+    /** @var  \DOMDocument */
+    protected $resultDom;
+    
+    public function setDomFromXmlString($xmlString)
+    {
+        parent::setDomFromXmlString($xmlString);
+        // Result attribute contain xml string, So we have to convert it into DomDocument.
+        $this->resultDom = $this->parseResultXml();
+    }
 
-    protected $status = array();
-
-    protected $availablePropertiesMap = array(
-        AbstractEntity::ID => '/task/@id',
-    );
-
-    /**
-     * Get task status information
-     *
-     * @return array
-     *
-     * @throws \Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException
-     */
     public function getStatus()
     {
-        if (empty($this->status)) {
-            $queryResult = $this->get('//task');
-
-            if ($queryResult->length == 1) {
-                $finished = $queryResult->item(0)->attributes->getNamedItem('finished')->nodeValue;
-                $succeeded = $queryResult->item(0)->attributes->getNamedItem('succeeded')->nodeValue;
-                $this->status[self::STATUS_FINISHED] = (strtolower($finished) === 'true');
-                $this->status[self::STATUS_SUCCEEDED] = (strtolower($succeeded) === 'true');
-                $this->status[self::STATUS_ERROR_MESSAGE] =
-                    $queryResult->item(0)->attributes->getNamedItem('errorMessage')->nodeValue;
-                $this->status[self::STATUS_ERROR_STACK] =
-                    $queryResult->item(0)->attributes->getNamedItem('errorStack')->nodeValue;
-
-                if ($this->status[self::STATUS_FINISHED] && $this->status[self::STATUS_SUCCEEDED]) {
-                    $result = $queryResult->item(0)->attributes->getNamedItem('result')->nodeValue;
-
-                    if ($result) {
-                        // extract attributes from result (the attribute value is also a xml o_O)
-                        $queryResult = Parser::get($result, '//result');
-
-                        if ($queryResult->length == 1) {
-                            $this->status[self::STATUS_PATH] =
-                                $queryResult->item(0)->attributes->getNamedItem('path')->nodeValue;
-                            $this->status[self::STATUS_URL] =
-                                $queryResult->item(0)->attributes->getNamedItem('url')->nodeValue;
-                            $this->status[self::STATUS_RELATIVE_URL] =
-                                $queryResult->item(0)->attributes->getNamedItem('relativeURL')->nodeValue;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $this->status;
+        $xmlString = $this->service->getStatus($this->getId());
+        $this->setDomFromXmlString($xmlString);
+        return $this;
     }
+
+    public function getId()
+    {
+        return $this->get('id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFinished()
+    {
+        return $this->getBoolean('finished');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSucceeded()
+    {
+        return $this->getBoolean('succeeded');
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->get('errorMessage');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPath()
+    {
+        return $this->get('path');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getRelativeUrl()
+    {
+        return $this->get('relativeURL');
+    }
+
+
+    /**
+     * @return null|string
+     */
+    public function getResultUrl()
+    {
+        return $this->getResultAttribute('url');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getResultPath()
+    {
+        return $this->getResultAttribute('path');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getResultRelativeUrl()
+    {
+        return $this->getResultAttribute('relativeURL');
+    }
+
+
+    /**
+     * @return \DOMDocument
+     */
+    protected function parseResultXml()
+    {
+        $resultString = $this->get('result');
+        return XmlUtils::stringToDomDocument($resultString);
+    }
+
+    protected function getResultAttribute($attributeName)
+    {
+        $result = '';
+        if ($rootNode = $this->resultDom->documentElement) {
+            $result = $rootNode->getAttribute($attributeName);
+        }
+        return $result;
+    }
+    
 }

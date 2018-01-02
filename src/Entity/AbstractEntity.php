@@ -2,86 +2,65 @@
 
 namespace Galilee\PPM\SDK\Chili\Entity;
 
-use Galilee\PPM\SDK\Chili\Exception\InvalidXpathExpressionException;
-use Galilee\PPM\SDK\Chili\Helper\Parser;
+use Galilee\PPM\SDK\Chili\Api\Client;
+use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
+use Galilee\PPM\SDK\Chili\Service\AbstractService;
 
-/**
- * Class AbstractEntity.
- */
-abstract class AbstractEntity implements InterfaceEntity
+abstract class AbstractEntity
 {
-    const NAME = 'name';
-    const ID = 'id';
+    
+    /** @var  AbstractService */
+    protected $service;
 
-    /** @var string $xmlDef */
-    protected $xmlDef = null;
-    /** @var string $id */
-    protected $id = null;
-
-    /** @var array $availablePropertiesMap */
-    protected $availablePropertiesMap = array();
+    /** @var \DOMDocument */
+    protected $dom;
 
     /**
-     * Set the entity xml definition
-     *
-     * @param string $xml
-     * @param bool $lazy - set lazily the entity ID
+     * AbstractEntity constructor.
+     * @param AbstractService $service
+     * @param $xmlString
      */
-    public function __construct($xml, $lazy = true)
+    public function __construct(AbstractService $service, $xmlString)
     {
-        $this->xmlDef = $xml;
-        if (!$lazy) {
-            $this->id = $this->getId();
-        }
+        $this->service = $service;
+        $this->setDomFromXmlString($xmlString);
     }
 
-    /**
-     * Get the entity ID
-     *
-     * @return string|null
-     *
-     * @throws InvalidXpathExpressionException
-     */
-    public function getId()
+    public function setDomFromXmlString($xmlString)
     {
-        if (!$this->id) {
-            $nodeList = $this->get(self::ID);
-            if ($nodeList->length == 1) {
-                $this->id = $nodeList->item(0)->nodeValue;
-            }
-        }
-
-        return $this->id;
+        $this->dom = XmlUtils::stringToDomDocument($xmlString);
+        return $this;
     }
 
-    /**
-     * Get the entity XML definition
-     *
-     * @return string
-     */
-    public function getXmlDef()
+    protected function get($attributeName, $parentDomElement = null)
     {
-        return $this->xmlDef;
-    }
-
-    /**
-     * General method to fetch information from the xmlDef (xml definition of the entity).
-     *
-     * @param string $key - key defined in $availablePropertiesMap or a XPath expression
-     *
-     * @return \DOMNodeList|null
-     *
-     * @throws InvalidXpathExpressionException
-     */
-    public function get($key)
-    {
-        $nodeList = null;
-        if (isset($this->availablePropertiesMap[$key])) {
-            $expression = $this->availablePropertiesMap[$key];
-        } else {
-            $expression = $key;
+        if (is_null($parentDomElement)) {
+            $parentDomElement = $this->dom->documentElement;
         }
 
-        return Parser::get($this->xmlDef, $expression);
+        return $parentDomElement->hasAttribute($attributeName)
+            ? $parentDomElement->getAttribute($attributeName)
+            : '';
+    }
+
+    protected function getBoolean($attributeName, $parentDomElement = null)
+    {
+        if (is_null($parentDomElement)) {
+            $parentDomElement = $this->dom->documentElement;
+        }
+
+        return $parentDomElement->hasAttribute($attributeName)
+            ? strtolower($parentDomElement->getAttribute($attributeName)) == 'true'
+            : null;
+    }
+
+    public function getXmlString()
+    {
+        return $this->dom->saveXML();
+    }
+
+    public function __toString()
+    {
+        return htmlspecialchars($this->dom->saveXML());
     }
 }

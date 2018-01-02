@@ -1,7 +1,0 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <soap:Body>
-        <ResourceSearchByIDsResponse xmlns="http://www.chili-publisher.com/">
-            <ResourceSearchByIDsResult><![CDATA[<searchresults><item name="WorkSpace_GI_CV" id="5e57eb29-51e9-4f0d-adfd-531e385cf4ff" relativePath="Formations\WorkSpace_GI_CV.xml" hasPreviewErrors="false" iconURL="galilee/download.aspx?type=thumb&amp;resourceName=WorkSpaces&amp;id=5e57eb29-51e9-4f0d-adfd-531e385cf4ff&amp;apiKey=Q0Jyyu+UBIW80D0Qyo5KMBrCB68sQgUVdpyjFFZYXG7VLIenG1tjVQGYAKzWDGVRs1DzMo4k+Ix27mnLKI9vTA==&amp;pageNum=1" /></searchresults>]]></ResourceSearchByIDsResult>
-        </ResourceSearchByIDsResponse>
-    </soap:Body>
-</soap:Envelope>
