@@ -82,6 +82,56 @@ class Documents extends AbstractResourceService
         return preg_replace('/([^:])(\/{2,})/', '$1/', $url);
     }
 
+	/**
+     * Get Url HTML Editor.
+     *
+     * @param string $itemID
+     * @param bool $allowWorkspaceAdministration
+     * @param string $viewPrefsID
+     * @param string $workSpaceID
+     * @param string $constraintsID
+     * @param string $viewerOnly
+     * @param bool $forAnonymousUser
+     * @return string
+     * @throws ChiliSoapCallException
+     */
+    public function getHTMLEditorUrl(
+        $itemID,
+        $allowWorkspaceAdministration = false,
+        $viewPrefsID = '',
+        $workSpaceID = '',
+        $constraintsID = '',
+        $viewerOnly = '',
+        $forAnonymousUser = false
+    )
+    {
+        if ($allowWorkspaceAdministration) {
+            $this->client->setWorkspaceAdministration(
+                array(
+                    'allowWorkspaceAdministration' => $allowWorkspaceAdministration
+                )
+            );
+        }
+
+        $params = array(
+            'itemID' => $itemID,
+            'viewPrefsID' => $viewPrefsID,
+            'workSpaceID' => $workSpaceID,
+            'constraintsID' => $constraintsID,
+            'viewerOnly' => $viewerOnly,
+            'forAnonymousUser' => $forAnonymousUser,
+        );
+        $xmlString = $this->client->documentGetHTMLEditorURL($params);
+        $urlInfo = new UrlInfo($this, $xmlString);
+        $url = $this->client->getConfig()->getProxyUrl()
+            ? $this->client->getConfig()->getProxyUrl() . '/' . $urlInfo->getRelativeURL()
+            : $urlInfo->getUrl();
+
+        // Remove double slashes
+        return preg_replace('/([^:])(\/{2,})/', '$1/', $url);
+    }
+
+	
     /**
      * Get Variable Values.
      *
