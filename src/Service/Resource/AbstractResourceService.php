@@ -76,7 +76,7 @@ abstract class AbstractResourceService extends AbstractService
         if (!$this->isExists($itemId)) {
             throw new EntityNotFoundException($itemId . ' not found.');
         }
-        // TODO Check if $itemId exists before copy
+
         $entity = null;
         $params = array(
             'resourceName' => $this->getResourceName(),
