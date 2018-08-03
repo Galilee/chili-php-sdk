@@ -56,13 +56,12 @@ class Documents extends AbstractResourceService
         $forAnonymousUser = false
     )
     {
-        if ($allowWorkspaceAdministration) {
-            $this->client->setWorkspaceAdministration(
-                array(
-                    'allowWorkspaceAdministration' => $allowWorkspaceAdministration
-                )
-            );
-        }
+        // Allow/disallow workspace administration explicitly (do not rely on default behaviour)
+        $this->client->setWorkspaceAdministration(
+            array(
+                'allowWorkspaceAdministration' => $allowWorkspaceAdministration
+            )
+        );
 
         $params = array(
             'itemID' => $itemID,
