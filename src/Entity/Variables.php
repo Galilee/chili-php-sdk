@@ -24,6 +24,7 @@ class Variables extends AbstractEntity
         {
             $names[] = $item->getAttribute('name');
         }
+        return $names;
     }
 
     /**
