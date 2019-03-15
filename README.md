@@ -12,6 +12,7 @@
 ## How to install
 
 ```console
+composer require galilee/chili-php-sdk
 composer install
 ```
 
