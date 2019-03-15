@@ -43,8 +43,8 @@ class Documents extends AbstractResourceService
      * @param string $constraintsID
      * @param string $viewerOnly
      * @param bool $forAnonymousUser
+     * @param bool $html
      * @return string
-     * @throws ChiliSoapCallException
      */
     public function getEditorUrl(
         $itemID,
@@ -53,16 +53,16 @@ class Documents extends AbstractResourceService
         $workSpaceID = '',
         $constraintsID = '',
         $viewerOnly = '',
-        $forAnonymousUser = false
+        $forAnonymousUser = false,
+        $html = false
     )
     {
-        if ($allowWorkspaceAdministration) {
-            $this->client->setWorkspaceAdministration(
-                array(
-                    'allowWorkspaceAdministration' => $allowWorkspaceAdministration
-                )
-            );
-        }
+        // Allow/disallow workspace administration explicitly (do not rely on default behaviour)
+        $this->client->setWorkspaceAdministration(
+            array(
+                'allowWorkspaceAdministration' => $allowWorkspaceAdministration
+            )
+        );
 
         $params = array(
             'itemID' => $itemID,
@@ -72,7 +72,11 @@ class Documents extends AbstractResourceService
             'viewerOnly' => $viewerOnly,
             'forAnonymousUser' => $forAnonymousUser,
         );
-        $xmlString = $this->client->documentGetEditorURL($params);
+        if ($html) {
+            $xmlString = $this->client->documentGetHTMLEditorURL($params);
+        } else {
+            $xmlString = $this->client->documentGetEditorURL($params);
+        }
         $urlInfo = new UrlInfo($this, $xmlString);
         $url = $this->client->getConfig()->getProxyUrl()
             ? $this->client->getConfig()->getProxyUrl() . '/' . $urlInfo->getRelativeURL()

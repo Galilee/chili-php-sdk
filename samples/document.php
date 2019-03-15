@@ -43,3 +43,7 @@ $result = $chiliPublisher->documents()->searchByIDs(
 $count = $result->getCount();
 
 $isExists = $chiliPublisher->documents()->isExists('067cd7e9-ed66-40ca-b326-ef2312ddac11');
+
+// Copy Document
+$document = $chiliPublisher->documents();
+$copied = $document->itemCopy('067cd7e9-ed66-40ca-b326-ef2312ddac11', 'new_name', '/your/path');

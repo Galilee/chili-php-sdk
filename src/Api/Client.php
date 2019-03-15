@@ -32,6 +32,7 @@ use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
  * Documents Methods :
  *
  * @method string documentGetEditorURL(array $params)
+ * @method string documentGetHTMLEditorURL(array $params)
  * @method string documentGetInfo(array $params)
  * @method string documentGetVariableValues(array $params)
  * @method string documentSetVariableValues(array $params)
@@ -102,10 +103,10 @@ class Client
     private function setApiKey()
     {
         if (isset($_SESSION)) {
-            if (!isset($_SESSION[self::CHILI_SESSION])) {
-                $_SESSION[self::CHILI_SESSION] = $this->apiKey = $this->generateApiKey();
-            } else {
+            if (isset($_SESSION[self::CHILI_SESSION]) && !empty($_SESSION[self::CHILI_SESSION])) {
                 $this->apiKey = $_SESSION[self::CHILI_SESSION];
+            } else {
+                $_SESSION[self::CHILI_SESSION] = $this->apiKey = $this->generateApiKey();
             }
         } else {
             $this->apiKey = $this->generateApiKey();

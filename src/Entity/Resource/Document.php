@@ -65,6 +65,38 @@ class Document extends AbstractResourceEntity
     }
 
     /**
+     * @param bool $allowWorkspaceAdministration
+     * @param string $viewPrefsID
+     * @param string $workSpaceID
+     * @param string $constraintsID
+     * @param string $viewerOnly
+     * @param bool $forAnonymousUser
+     * @return string
+     * @throws ChiliSoapCallException
+     */
+    public function getHtmlEditorUrl(
+        $allowWorkspaceAdministration = false,
+        $viewPrefsID = '',
+        $workSpaceID = '',
+        $constraintsID = '',
+        $viewerOnly = '',
+        $forAnonymousUser = false
+    )
+    {
+        return $this->service->getEditorUrl(
+            $this->getId(),
+            $allowWorkspaceAdministration ,
+            $viewPrefsID,
+            $workSpaceID,
+            $constraintsID,
+            $viewerOnly,
+            $forAnonymousUser,
+            true
+        );
+    }
+
+
+    /**
      * Get Variable Values.
      *
      * @return Variables
