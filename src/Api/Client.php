@@ -32,6 +32,7 @@ use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
  * Documents Methods :
  *
  * @method string documentGetEditorURL(array $params)
+ * @method string documentGetHTMLEditorURL(array $params)
  * @method string documentGetInfo(array $params)
  * @method string documentGetVariableValues(array $params)
  * @method string documentSetVariableValues(array $params)
