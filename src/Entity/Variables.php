@@ -20,8 +20,7 @@ class Variables extends AbstractEntity
         $names = array();
         $items = $this->dom->documentElement->childNodes;
         /** @var \DOMElement $item */
-        foreach ($items as $item)
-        {
+        foreach ($items as $item) {
             $names[] = $item->getAttribute('name');
         }
         return $names;
@@ -49,6 +48,18 @@ class Variables extends AbstractEntity
     {
         $variable = $this->getVariableDomElementByName($name);
         $variable->setAttribute('value', $value);
+    }
+
+    /**
+     * Set variable imgXML
+     *
+     * @param $name
+     * @param $imgXML
+     */
+    public function setImgXML($name, $imgXML)
+    {
+        $variable = $this->getVariableDomElementByName($name);
+        $variable->setAttribute('imgXML', $imgXML);
     }
 
     /**
