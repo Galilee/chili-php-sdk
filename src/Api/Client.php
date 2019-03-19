@@ -26,16 +26,21 @@ use Galilee\PPM\SDK\Chili\Helper\XmlUtils;
  * @method string resourceItemSave(array $params)
  * @method string resourceItemCopy(array $params)
  * @method string resourceItemGetURL(array $params)
- * @method string ResourceItemDelete(array $params)
+ * @method string resourceItemDelete(array $params)
+ * @method string resourceItemGetByIdOrPath(array $params)
+ * @method string resourceItemAdd(array $params)
  *
  *
  * Documents Methods :
  *
  * @method string documentGetEditorURL(array $params)
+ * @method string documentGetHTMLEditorURL(array $params)
  * @method string documentGetInfo(array $params)
  * @method string documentGetVariableValues(array $params)
  * @method string documentSetVariableValues(array $params)
  * @method string documentCreatePDF(array $params)
+ * @method string documentSetAssetDirectories(array $params)
+ * @method string documentCreateTempImages(array $params)
  *
  *
  * Others methods :
@@ -78,6 +83,7 @@ class Client
     {
         return $this->config;
     }
+
     /**
      * @param Config $config
      */
@@ -102,10 +108,10 @@ class Client
     private function setApiKey()
     {
         if (isset($_SESSION)) {
-            if (!isset($_SESSION[self::CHILI_SESSION])) {
-                $_SESSION[self::CHILI_SESSION] = $this->apiKey = $this->generateApiKey();
-            } else {
+            if (isset($_SESSION[self::CHILI_SESSION]) && !empty($_SESSION[self::CHILI_SESSION])) {
                 $this->apiKey = $_SESSION[self::CHILI_SESSION];
+            } else {
+                $_SESSION[self::CHILI_SESSION] = $this->apiKey = $this->generateApiKey();
             }
         } else {
             $this->apiKey = $this->generateApiKey();
@@ -127,8 +133,8 @@ class Client
             $rawXMLResponse = $this->soapClient->GenerateApiKey(
                 array(
                     'environmentNameOrURL' => $this->config->getEnvironment(),
-                    'userName'             => $this->config->getUsername(),
-                    'password'             => $this->config->getPassword()
+                    'userName' => $this->config->getUsername(),
+                    'password' => $this->config->getPassword()
                 ),
                 array(
                     'wsdl_cache' => 1
