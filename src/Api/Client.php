@@ -59,6 +59,9 @@ class Client
     /** @var string */
     protected $apiKey;
 
+    /** @var \DateTime */
+    protected $apiKeyExpirationDate;
+
     private static $_instance = null;
 
 
@@ -79,8 +82,10 @@ class Client
     {
         return $this->config;
     }
+
     /**
      * @param Config $config
+     * @throws ChiliSoapCallException
      */
     private function connect(Config $config)
     {
@@ -99,19 +104,61 @@ class Client
      * One api key per end user session.
      *
      * @return $this
+     * @throws ChiliSoapCallException
      */
     private function setApiKey()
     {
+        @session_start();
+
         if (isset($_SESSION)) {
             if (isset($_SESSION[self::CHILI_SESSION]) && !empty($_SESSION[self::CHILI_SESSION])) {
-                $this->apiKey = $_SESSION[self::CHILI_SESSION];
+                $this->apiKey = $_SESSION[self::CHILI_SESSION]['key'];
+                $this->apiKeyExpirationDate = $_SESSION[self::CHILI_SESSION]['expire'];
+
+                // if api key expired, get a new one
+                if ($this->apiKeyExpirationDate < new \DateTime('now')) {
+                    $this->refreshApiKey(true);
+                }
             } else {
-                $_SESSION[self::CHILI_SESSION] = $this->apiKey = $this->generateApiKey();
+                $this->refreshApiKey(true);
             }
         } else {
-            $this->apiKey = $this->generateApiKey();
+            $this->refreshApiKey(false);
         }
+
         return $this;
+    }
+
+    /**
+     * @param bool $saveInSession
+     *
+     * @throws ChiliSoapCallException
+     */
+    private function refreshApiKey($saveInSession = true)
+    {
+        $key = $this->generateApiKey();
+        $this->apiKey = $key['key'];
+        $this->apiKeyExpirationDate = $key['expire'];
+
+        if ($saveInSession) {
+            $_SESSION[self::CHILI_SESSION] = $key;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getApiKeyExpirationDate()
+    {
+        return $this->apiKeyExpirationDate;
     }
 
 
@@ -119,7 +166,7 @@ class Client
      * Get the chili apiKey, parameter needed for the webservice calls.
      *
      * @link http://docs.chili-publish.com/display/CPD4/Logging+in+to+the+WebServices
-     * @return string
+     * @return array
      * @throws ChiliSoapCallException
      */
     private function generateApiKey()
@@ -137,8 +184,11 @@ class Client
             );
             $xmlString = $this->getResponse($rawXMLResponse, 'GenerateApiKey');
             $domXml = XmlUtils::stringToDomDocument($xmlString);
-            return $domXml->getElementsByTagName('apiKey')->item(0)->getAttribute('key');
 
+            return array(
+                'key' => $domXml->getElementsByTagName('apiKey')->item(0)->getAttribute('key'),
+                'expire' => new \DateTime($domXml->getElementsByTagName('apiKey')->item(0)->getAttribute('validTill'))
+            );
         } catch (\Exception $e) {
             throw new ChiliSoapCallException($e->getMessage(), $e->getCode());
         }
@@ -152,9 +202,9 @@ class Client
      * @return string
      * @throws ChiliSoapCallException
      */
-    public function __call($methodName, $params = [])
+    public function __call($methodName, $params = array())
     {
-        $params = array_merge(['apiKey' => $this->apiKey], $params[0]);
+        $params = array_merge(array('apiKey' => $this->apiKey), $params[0]);
         $methodName = ucfirst(($methodName));
         try {
             /** @var \stdClass $rawXMLResponse */
