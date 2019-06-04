@@ -108,8 +108,6 @@ class Client
      */
     private function setApiKey()
     {
-        @session_start();
-
         if (isset($_SESSION)) {
             if (isset($_SESSION[self::CHILI_SESSION]) && !empty($_SESSION[self::CHILI_SESSION])) {
                 $this->apiKey = $_SESSION[self::CHILI_SESSION]['key'];
